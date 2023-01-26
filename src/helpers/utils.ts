@@ -1,4 +1,5 @@
 import Toast from 'react-native-toast-message';
+import {getStringValue} from './storage';
 
 export const validateEmail = (email: string) => {
   var re = /\S+@\S+\.\S+/;
@@ -6,6 +7,12 @@ export const validateEmail = (email: string) => {
 };
 
 const truncateString = (str: string, len: number) => str.slice?.(0, len);
+
+export const infobyLogin = async () => {
+  const publicAddress = (await getStringValue('publicAddress')) as string;
+  const idToken = (await getStringValue('idtoken')) as string;
+  return {idToken, publicAddress};
+};
 
 export const truncateStringIfNeeded = (text: string, limit: number) => {
   if (text && text.length > limit) {
