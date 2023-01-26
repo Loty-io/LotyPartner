@@ -95,7 +95,7 @@ const CollectionQR = ({ navigation, route }: any) => {
                     }}>
                         <QRCode
                             value={contractAddress}
-                            ///logo={require('../assets/login-logo.png')}
+                            logo={require('../assets/login-logo.png')}
                             size={Dimensions.get('window').width - paddingHorizontal * 4}
                             backgroundColor="white"
                             logoBorderRadius={8}

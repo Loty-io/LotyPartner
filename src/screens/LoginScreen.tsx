@@ -16,46 +16,75 @@ import Toast from 'react-native-toast-message';
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
 import CustomTextInput from '../components/CustomTextInput';
-import {getMagic} from '../helpers/magic';
-import {validateEmail} from '../helpers/utils';
+import {validateEmail, showToast} from '../helpers/utils';
 import {getStringValue, storeStringValue} from '../helpers/storage';
 import {DEV_MODE_PARAMS} from '../config';
+import {emailWeb3auth} from '../helpers/loginweb3auth';
 
-const magic = getMagic();
+import RCP from '../helpers/web3auth';
 
 const INVALID_EMAIL = 'Invalid email';
 
 const LoginScreen = ({navigation}: any) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [email, onChangeEmail] = React.useState(
-    __DEV__ ? DEV_MODE_PARAMS.email : '',
+    false ? DEV_MODE_PARAMS.email : '',
   );
 
   const attemptLogin = async (userEmail: string) => {
+    setIsLoading(true);
     if (!userEmail || !validateEmail(userEmail)) {
+      setIsLoading(false);
       throw new Error(INVALID_EMAIL);
     }
-
-    if (userEmail !== DEV_MODE_PARAMS.email || __DEV__) {
-      const decentralizedIDToken = await magic.auth.loginWithMagicLink({
-        email: userEmail,
-      });
-
-      if (!decentralizedIDToken) {
-        throw new Error('Invalid decentralizedIDToken');
+    let publicAddress = '';
+    try {
+      if (userEmail !== DEV_MODE_PARAMS.email) {
+        const info = await emailWeb3auth(userEmail);
+        if (info.userInfo === '') {
+          setIsLoading(false);
+          throw new Error('Something is wrong');
+        }
+        const address = await RCP.getAccounts('0x' + info.privKey);
+        const userInfo = await info.userInfo.idToken;
+        publicAddress = '' + address;
+        console.log(publicAddress);
+        storeStringValue('publicAddress', publicAddress);
+        storeStringValue('email', userEmail);
+        storeStringValue('idtoken', userInfo);
+        console.log(userInfo);
+        storeStringValue('typeOfLogin', 'email');
+        navigation.navigate('ScanTabNavigator');
+        showToast('success', 'login correcto');
+        setIsLoading(false);
       }
+    } catch (error) {
+      setIsLoading(false);
     }
 
-    storeStringValue('email', userEmail);
-    navigation.navigate('ScanTabNavigator');
-    setIsLoading(false);
+    // storeStringValue('email', userEmail);
+    // navigation.navigate('ScanTabNavigator');
+    // setIsLoading(false);
   };
 
   React.useEffect(() => {
     const resolveAuth = async () => {
+      setIsLoading(true);
       try {
-        const emailInStorage = await getStringValue('email');
-        await attemptLogin(emailInStorage);
+        // const emailInStorage = await getStringValue('email');
+        // await attemptLogin(emailInStorage);
+        const token = await getStringValue('idtoken');
+        const emailuser = await getStringValue('email');
+        const publicAddress = await getStringValue('publicAddress');
+        if (!token || !emailuser || !publicAddress) {
+          throw new Error('Auto sing in error');
+        }
+        storeStringValue('publicAddress', publicAddress);
+        storeStringValue('email', emailuser);
+        storeStringValue('idtoken', token);
+
+        navigation.navigate('ScanTabNavigator');
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         setIsLoading(false);

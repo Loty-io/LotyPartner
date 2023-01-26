@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Image, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {Image, StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Toast from 'react-native-toast-message';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import LoginScreen from './src/screens/LoginScreen';
 import ScanScreen from './src/screens/ScanScreen';
@@ -12,14 +12,14 @@ import CameraScreen from './src/screens/CameraScreen';
 import CheckInScreen from './src/screens/CheckInScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import { getMagic } from './src/helpers/magic';
-import QRCodeScanner from 'react-native-qrcode-scanner';
+// import { getMagic } from './src/helpers/magic';
+// import QRCodeScanner from 'react-native-qrcode-scanner';
 import CollectionQR from './src/screens/CollectionQR';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const magic = getMagic();
+// const magic = getMagic();
 const options = {
   headerShown: false,
 };
@@ -35,14 +35,14 @@ export default function App() {
 
     return (
       <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused }) => {
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused}) => {
             if ((focused || !focused) && route.name === 'Scan') {
               const size = 20;
 
               return (
                 <Image
-                  style={{ width: size, height: size }}
+                  style={{width: size, height: size}}
                   source={require('./src/assets/qr-code-bottom-tab.png')}
                 />
               );
@@ -67,7 +67,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <StatusBar barStyle="light-content" />
-      <magic.Relayer />
+      {/* <magic.Relayer /> */}
 
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} options={options} />
@@ -84,11 +84,7 @@ export default function App() {
           component={CameraScreen}
           options={options}
         />
-        <Stack.Screen
-          name="QR"
-          component={CollectionQR}
-          options={options}
-        />
+        <Stack.Screen name="QR" component={CollectionQR} options={options} />
         <Stack.Screen
           name="CheckIn"
           component={CheckInScreen}

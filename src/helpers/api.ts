@@ -1,13 +1,13 @@
 import axios from 'axios';
 import {baseUrl} from '../config';
-import {getIdToken} from './magic';
+import {infobyLogin} from './utils';
 
 const SUCCESS = 'success';
 
 export const getScannedNftCollections = async () => {
-  const idToken = await getIdToken();
-  const url = `${baseUrl}/scanned-nft-collections?idToken=${idToken}`;
-
+  const {idToken, publicAddress} = await infobyLogin();
+  const url = `${baseUrl}/scanned-nft-collections?idToken=${idToken}&publicAddress=${publicAddress}`;
+  // console.log(url);
   const response = await axios.get(url);
 
   const {scannedNftCollections} = response.data;
@@ -16,9 +16,11 @@ export const getScannedNftCollections = async () => {
 };
 
 export const getNftGromQrCode = async (qrCodeData: string) => {
-  const idToken = await getIdToken();
-  const url = `${baseUrl}/nft-from-qr-code?qrCodeData=${qrCodeData}&idToken=${idToken}`;
+  const {idToken, publicAddress} = await infobyLogin();
+  // const idToken = await getIdToken();
+  const url = `${baseUrl}/nft-from-qr-code?qrCodeData=${qrCodeData}&idToken=${idToken}&publicAddress=${publicAddress}`;
 
+  // console.log(url);
   const response = await axios.get(url);
 
   const {nft, status, error_message: errorMessage} = response.data;
@@ -28,9 +30,11 @@ export const getNftGromQrCode = async (qrCodeData: string) => {
 };
 
 export const getScannedNfts = async (id: string, contractAddress: string) => {
-  const idToken = await getIdToken();
-  const url = `${baseUrl}/scanned-nfts?id=${id}&idToken=${idToken}&contractAddress=${contractAddress}`;
+  // const idToken = await getIdToken();
+  const {idToken, publicAddress} = await infobyLogin();
+  const url = `${baseUrl}/scanned-nfts?id=${id}&idToken=${idToken}&contractAddress=${contractAddress}&publicAddress=${publicAddress}`;
 
+  // console.log(url);
   const response = await axios.get(url);
 
   const {nfts, status, error_message: errorMessage} = response.data;
@@ -40,10 +44,12 @@ export const getScannedNfts = async (id: string, contractAddress: string) => {
 };
 
 export const callCheckInApi = async (qrCodeData: string) => {
-  const idToken = await getIdToken();
+  const {idToken, publicAddress} = await infobyLogin();
+  // const idToken = await getIdToken();
   const url = `${baseUrl}/check-in`;
+  // console.log(url);
 
-  const response = await axios.post(url, {qrCodeData, idToken});
+  const response = await axios.post(url, {qrCodeData, idToken, publicAddress});
 
   const {status, error_message: errorMessage} = response.data;
   const hasError = status !== SUCCESS;
@@ -53,13 +59,20 @@ export const callCheckInApi = async (qrCodeData: string) => {
 
 export const addContractAddressApi = async (contractAddress: string) => {
   console.log('InitApi');
-  const idToken = await getIdToken();
-  console.log(idToken);
-  console.log(baseUrl);
+  // const idToken = await getIdToken();
+  const {idToken, publicAddress} = await infobyLogin();
+
+  // console.log(idToken);
+  // console.log(baseUrl);
   const url = `${baseUrl}/contract-address`;
-  console.log(url);
-  const response = await axios.post(url, {contractAddress, idToken});
-  console.log(response.data);
+  // console.log(url);
+  const response = await axios.post(url, {
+    contractAddress,
+    idToken,
+    publicAddress,
+  });
+  // console.log(url);
+  // console.log(response.data);
 
   const {status, error_message: errorMessage} = response.data;
   const hasError = status !== SUCCESS;
@@ -68,10 +81,14 @@ export const addContractAddressApi = async (contractAddress: string) => {
 };
 
 export const deleteContractAddressApi = async (contractAddress: string) => {
-  const idToken = await getIdToken();
+  // const idToken = await getIdToken();
+  const {idToken, publicAddress} = await infobyLogin();
+
   const url = `${baseUrl}/contract-address`;
 
-  const response = await axios.delete(url, {data: {contractAddress, idToken}});
+  const response = await axios.delete(url, {
+    data: {contractAddress, idToken, publicAddress},
+  });
 
   const {status, error_message: errorMessage} = response.data;
   const hasError = status !== SUCCESS;
