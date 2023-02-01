@@ -18,9 +18,7 @@ const CollectionQR = ({ navigation, route }: any) => {
         navigation.goBack();
     };
 
-    // const QRCode = () => (
 
-    // );
 
     return (
         <SafeAreaView style={styles.container}>
@@ -81,28 +79,26 @@ const CollectionQR = ({ navigation, route }: any) => {
                         }}>
                         {collectionName}
                     </BoldCustomText>
-                    <View style={{
-                        width: '100%',
-                        height: Dimensions.get('window').width - paddingHorizontal * 2,
-                        backgroundColor: 'white',
-                        borderWidth: 1,
-                        borderColor: 'transparent',
-                        borderRadius,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: 40,
-                        marginBottom: 40,
-                    }}>
+                    <View
+                        style={{
+                            width: '100%',
+                            height: Dimensions.get('window').width - paddingHorizontal * 2,
+                            backgroundColor: 'lightblue',
+                            borderWidth: 1,
+                            borderColor: 'transparent',
+                            borderRadius,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginTop: 40,
+                            marginBottom: 40,
+                        }}>
                         <QRCode
                             value={contractAddress}
-                            logo={require('../assets/login-logo.png')}
                             size={Dimensions.get('window').width - paddingHorizontal * 4}
-                            backgroundColor="white"
                             logoBorderRadius={8}
                             logoMargin={20}
+                            backgroundColor="white"
                         />
-
-
                     </View>
 
                     <CustomText

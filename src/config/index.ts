@@ -1,9 +1,12 @@
 export const baseUrl = false
-  ? 'http://192.168.1.85:3000/api'
-  : 'http://loty-ap-is.vercel.app/api';
+  ? 'https://f22e-2806-10a6-d-b8d1-75af-e111-f13-3678.ngrok.io/api'
+  : 'https://loty-io-api.vercel.app/api';
 
 export const DEV_MODE_PARAMS = {
   email: 'test+success@magic.link',
 };
+
+export const providerUrl = 'https://rpc.ankr.com/polygon'; //'https://rpc.ankr.com/eth'; // Or your desired provider url
+export const USE_TESTNET = __DEV__;
 
 export const TOKEN_LIFESPAN_IN_SECONDS = 1209600;
