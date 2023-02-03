@@ -6,23 +6,57 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  Dimensions,
+  Clipboard,
+  RefreshControl,
 } from 'react-native';
 
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
 import CustomTextInput from '../components/CustomTextInput';
-import { addContractAddressApi, deleteContractAddressApi } from '../helpers/api';
-import { showToast } from '../helpers/utils';
+import { addContractAddressApi, deleteContractAddressApi, getScannedNftCollections } from '../helpers/api';
+import { showToast, truncateAddress } from '../helpers/utils';
 
 const SettingsScreen = ({ navigation, route }: any) => {
-  const [contractAddressArray, setContractAddressArray] = React.useState<
-    string[]
-  >(route?.params?.contractAddressArray ?? []);
+
+
   const [isAdding, setIsAdding] = React.useState(false);
   const [contractAddress, setContractAddress] = React.useState('');
 
+  //*************************************************************** */
+  const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  const fetchData = async () => {
+    try {
+      const result = await getScannedNftCollections();
+      setScannedNftCollections(result);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setIsLoading(false);
+  };
+
+  React.useEffect(() => {
+    fetchData();
+
+    const interval = setInterval(() => {
+      fetchData();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  //*************************************************************** */
+
   const onPressGoBack = () => {
     navigation.navigate('Scan', { hasScannedNft: true });
+  };
+
+  const onPressCopy = (contractAddress: string) => {
+    Clipboard.setString(contractAddress);
+    showToast('success', 'Contract Address Copied!');
   };
 
   const onPressDelete = async (contractAddr: string) => {
@@ -35,9 +69,6 @@ const SettingsScreen = ({ navigation, route }: any) => {
         throw new Error(errorMessage);
       }
 
-      setContractAddressArray(prevValue =>
-        prevValue.filter(item => item !== contractAddr),
-      );
       showToast('success', 'Removed correctly');
     } catch (error) {
       console.log(error);
@@ -53,6 +84,9 @@ const SettingsScreen = ({ navigation, route }: any) => {
 
     try {
       console.log('InitAdd');
+      const contractAddressArray = await scannedNftCollections.map(
+        ({ contractAddress, }) => contractAddress
+      );
       if (contractAddress && contractAddressArray.includes(contractAddress)) {
         showToast('error', 'Address Already Added');
         console.log('repetido');
@@ -68,7 +102,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
         throw new Error(errorMessage);
       }
 
-      setContractAddressArray([...contractAddressArray, contractAddress]);
+      //setContractAddressArray([...contractAddressArray, contractAddress]);
       setContractAddress('');
       showToast('success', 'Added correctly');
     } catch (error) {
@@ -79,30 +113,58 @@ const SettingsScreen = ({ navigation, route }: any) => {
   };
 
   const imageSize = 18;
-
-  const renderItem = ({ item }: { item: string }) => (
+  const renderItem = ({
+    item: {
+      name = '',
+      contractAddress = '',
+    }
+  }) => (
     <View
       style={{
+        width: Dimensions.get('window').width,
         borderBottomColor: '#48484A',
         borderBottomWidth: 1,
         padding: 16,
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-      <CustomText
-        style={{
-          color: '#F2F2F7',
-          fontSize: 18,
-          marginVertical: 11,
-          flex: 9,
+
+      <View style={{
+        width: '80%',
+        flexDirection: 'column',
+      }}>
+        <BoldCustomText
+          style={{
+            color: '#F2F2F7',
+            fontSize: 18,
+            marginVertical: 11,
+            flex: 9,
+          }}>
+          {name}
+        </BoldCustomText>
+        <View style={{
+          width: '70%',
+          flexDirection: 'row',
         }}>
-        {item}
-      </CustomText>
+          <CustomText
+            style={{
+              color: '#8E8E93',
+              fontSize: 15,
+              marginRight: 10,
+              marginTop: 3,
+            }}>
+            {truncateAddress(contractAddress)}
+          </CustomText>
+          <TouchableOpacity onPress={() => onPressCopy(contractAddress)} style={{ marginTop: 3, width: imageSize }}>
+            <Image source={require('../assets/copy.png')} />
+          </TouchableOpacity>
+        </View>
+      </View>
       <TouchableOpacity
-        onPress={() => onPressDelete(item)}
+        onPress={() => onPressDelete(contractAddress)}
         style={{
           flex: 1,
-          marginLeft: 10,
+          marginLeft: 5,
           alignItems: 'center',
           justifyContent: 'center',
           width: imageSize,
@@ -117,6 +179,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
         />
       </TouchableOpacity>
     </View>
+
   );
 
   return (
@@ -206,12 +269,15 @@ const SettingsScreen = ({ navigation, route }: any) => {
         Your Smart Contract Addresses:
       </BoldCustomText>
 
-      {contractAddressArray.length ? (
+      {scannedNftCollections.length ? (
         <FlatList
-          data={contractAddressArray}
+          data={scannedNftCollections}
           renderItem={renderItem}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
+          }
         />
       ) : (
         <View
@@ -226,7 +292,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
               fontSize: 18,
               textAlign: 'center',
             }}>
-            {'Nothing added yet'}
+            {isLoading ? 'Loading...' : 'Nothing added yet'}
           </BoldCustomText>
         </View>
       )}
@@ -264,3 +330,9 @@ const styles = StyleSheet.create({
 });
 
 export default SettingsScreen;
+
+
+
+
+
+

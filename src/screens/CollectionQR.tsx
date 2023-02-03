@@ -79,11 +79,12 @@ const CollectionQR = ({ navigation, route }: any) => {
                         }}>
                         {collectionName}
                     </BoldCustomText>
+
                     <View
                         style={{
                             width: '100%',
                             height: Dimensions.get('window').width - paddingHorizontal * 2,
-                            backgroundColor: 'lightblue',
+                            backgroundColor: 'white',
                             borderWidth: 1,
                             borderColor: 'transparent',
                             borderRadius,

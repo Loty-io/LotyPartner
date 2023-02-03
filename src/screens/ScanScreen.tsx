@@ -61,10 +61,8 @@ const ScanScreen = ({ navigation, route }: any) => {
   };
 
   const onPressSettings = () => {
-    const contractAddressArray = scannedNftCollections.map(
-      ({ contractAddress }) => contractAddress,
-    );
-    navigation.navigate('Settings', { contractAddressArray });
+
+    navigation.navigate('Settings');
   };
 
   const onPressCollection = (

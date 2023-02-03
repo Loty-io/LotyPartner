@@ -11,7 +11,7 @@ export const getScannedNftCollections = async () => {
   const response = await axios.get(url);
 
   const {scannedNftCollections} = response.data;
-
+  
   return Array.isArray(scannedNftCollections) ? scannedNftCollections : [];
 };
 
