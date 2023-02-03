@@ -1,3 +1,4 @@
+import {Contract} from 'ethers';
 import Toast from 'react-native-toast-message';
 import {getStringValue} from './storage';
 
@@ -41,4 +42,59 @@ export const showToast = (type: string, errorMessage: string) => {
     type,
     text1: errorMessage,
   });
+};
+
+interface jsonNftDada {
+  name: String;
+  contractAddress: String;
+  owner: String;
+}
+
+interface returnJsonData {
+  name: String;
+  contractAddress: String;
+  owner: String;
+  checink: Number;
+}
+
+export const countCheckIn = async (data: jsonNftDada[]) => {
+  let data_checkins: Record<string, String | number>[] = [];
+  let bander = false;
+  data_checkins.push({
+    name: data[0].name,
+    contractAddress: data[0].contractAddress,
+    owner: data[0].owner,
+    checink: 0,
+  });
+  data.forEach(info => {
+    data_checkins.forEach((dataowner, index) => {
+      if (
+        dataowner.owner === info.owner &&
+        dataowner.contractAddress === info.contractAddress &&
+        dataowner.name === info.name
+      ) {
+        bander = true;
+        let check = data_checkins[index].checink as number;
+        data_checkins[index].checink = check + 1;
+      }
+    });
+
+    if (!bander) {
+      data_checkins.push({
+        name: info.name,
+        contractAddress: info.contractAddress,
+        owner: info.owner,
+        checink: 1,
+      });
+
+      // data_return.push(data_checkins);
+    }
+    bander = false;
+  });
+
+  // console.log(JSON.stringify(data_checkins, null, 2));
+  // console.log(data_checkins);
+  // const dataJson = data_checkins as unknown;
+  // const json = JSON.stringify(data_checkins);
+  return data_checkins;
 };

@@ -2066,12 +2066,12 @@
   "resolved" "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz"
   "version" "1.1.2"
 
-"@toruslabs/react-native-web-browser@0.2.0":
-  "integrity" "sha512-+yWon8Xu4DnPW8QfqlLuOAz6Ddq7CPMXXPo7DfU3hnvDtCFH3qVQOykrlyepwNI14HinOEiodtg4XyDtZDTxmg=="
-  "resolved" "https://registry.npmjs.org/@toruslabs/react-native-web-browser/-/react-native-web-browser-0.2.0.tgz"
-  "version" "0.2.0"
+"@toruslabs/react-native-web-browser@^1.1.0":
+  "integrity" "sha512-b1c8+v2UciOIjuJjW70VJe9ulqB53QxzeyeqI4ZKL19YeAJ8LdkFe4TPNYtMdaVDdzVKANZp57YS1/4gNjRd6A=="
+  "resolved" "https://registry.npmjs.org/@toruslabs/react-native-web-browser/-/react-native-web-browser-1.1.0.tgz"
+  "version" "1.1.0"
   dependencies:
-    "compare-urls" "^2.0.0"
+    "compare-urls" "^3.0.0"
 
 "@tsconfig/react-native@^2.0.2":
   "integrity" "sha512-OY+qydDk8Xw+VONvAFB6WTZAi3OP/KSQWNIeuJgkGFHGV3epw8qlctJQ35+fKGG4919nGbNS9ZI0JuZl1y8w2g=="
@@ -3350,12 +3350,12 @@
   "resolved" "https://registry.npmjs.org/commondir/-/commondir-1.0.1.tgz"
   "version" "1.0.1"
 
-"compare-urls@^2.0.0":
-  "integrity" "sha512-eCJcWn2OYFEIqbm70ta7LQowJOOZZqq1a2YbbFCFI1uwSvj+TWMwXVn7vPR1ceFNcAIt5RSTDbwdlX82gYLTkA=="
-  "resolved" "https://registry.npmjs.org/compare-urls/-/compare-urls-2.0.0.tgz"
-  "version" "2.0.0"
+"compare-urls@^3.0.0":
+  "integrity" "sha512-ahiOacI38gwq9grxorFL3zBHA0AxkSlSe9QXKcYnI8JOhCp6CueTgZJbOvums6vjB/5nNQQ4XjXmH9Z5WnLE+Q=="
+  "resolved" "https://registry.npmjs.org/compare-urls/-/compare-urls-3.0.0.tgz"
+  "version" "3.0.0"
   dependencies:
-    "normalize-url" "^2.0.1"
+    "normalize-url" "^6.0.1"
 
 "component-emitter@^1.2.1":
   "integrity" "sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg=="
@@ -5279,11 +5279,6 @@
   "resolved" "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz"
   "version" "7.0.0"
 
-"is-plain-obj@^1.0.0":
-  "integrity" "sha512-yvkRyxmFKEOQ4pNXCmJG5AEQNlXJS5LaONXo5/cLdTZdWvsZ1ioJEonLGAosKlMWE8lwUy/bJzMjcw8az73+Fg=="
-  "resolved" "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-1.1.0.tgz"
-  "version" "1.1.0"
-
 "is-plain-obj@^2.1.0":
   "integrity" "sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA=="
   "resolved" "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-2.1.0.tgz"
@@ -6850,14 +6845,10 @@
   "resolved" "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz"
   "version" "3.0.0"
 
-"normalize-url@^2.0.1":
-  "integrity" "sha512-D6MUW4K/VzoJ4rJ01JFKxDrtY1v9wrgzCX5f2qj/lzH1m/lW6MhUZFKerVsnyjOhOsYzI9Kqqak+10l4LvLpMw=="
-  "resolved" "https://registry.npmjs.org/normalize-url/-/normalize-url-2.0.1.tgz"
-  "version" "2.0.1"
-  dependencies:
-    "prepend-http" "^2.0.0"
-    "query-string" "^5.0.1"
-    "sort-keys" "^2.0.0"
+"normalize-url@^6.0.1":
+  "integrity" "sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A=="
+  "resolved" "https://registry.npmjs.org/normalize-url/-/normalize-url-6.1.0.tgz"
+  "version" "6.1.0"
 
 "npm-run-path@^2.0.0":
   "integrity" "sha512-lJxZYlT4DW/bRUtFh1MQIWqmLwQfAxnqWG4HhEdjMlkrJYnJn0Jrr2u3mgxqaWsdiBc76TYkTG/mhrnYTuzfHw=="
@@ -7299,11 +7290,6 @@
   "integrity" "sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w=="
   "resolved" "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.1.2.tgz"
   "version" "1.1.2"
-
-"prepend-http@^2.0.0":
-  "integrity" "sha512-ravE6m9Atw9Z/jjttRUZ+clIXogdghyZAuWJ3qEzjT+jI/dL1ifAqhZeC5VHzQp1MSt1+jxKkFNemj/iO7tVUA=="
-  "resolved" "https://registry.npmjs.org/prepend-http/-/prepend-http-2.0.0.tgz"
-  "version" "2.0.0"
 
 "prettier-linter-helpers@^1.0.0":
   "integrity" "sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w=="
@@ -8250,13 +8236,6 @@
     "source-map" "^0.5.6"
     "source-map-resolve" "^0.5.0"
     "use" "^3.1.0"
-
-"sort-keys@^2.0.0":
-  "integrity" "sha512-/dPCrG1s3ePpWm6yBbxZq5Be1dXGLyLn9Z791chDC3NFrpkVbWGzkBwPN1knaciexFXgRJ7hzdnwZ4stHSDmjg=="
-  "resolved" "https://registry.npmjs.org/sort-keys/-/sort-keys-2.0.0.tgz"
-  "version" "2.0.0"
-  dependencies:
-    "is-plain-obj" "^1.0.0"
 
 "source-map-resolve@^0.5.0":
   "integrity" "sha512-Htz+RnsXWk5+P2slx5Jh3Q66vhQj1Cllm0zvnaY98+NFx+Dv2CF/f5O/t8x+KaNdrdIAsruNzoh/KpialbqAnw=="
