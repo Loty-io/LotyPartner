@@ -1,6 +1,6 @@
 export const baseUrl = false
   ? 'https://f22e-2806-10a6-d-b8d1-75af-e111-f13-3678.ngrok.io/api'
-  : 'https://loty-io-api.vercel.app/api';
+  : 'https://lotyio-api.vercel.app/';
 
 export const DEV_MODE_PARAMS = {
   email: 'test+success@magic.link',
