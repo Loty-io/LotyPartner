@@ -11,17 +11,20 @@ import {
 
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
-import { truncateAddress } from '../helpers/utils';
-import { getScannedNfts } from '../helpers/api';
+import {countCheckIn, truncateAddress} from '../helpers/utils';
+import {getScannedNfts} from '../helpers/api';
 
-const AnalyticsScreen = ({ navigation, route }: any) => {
+const AnalyticsScreen = ({navigation, route}: any) => {
   const [scannedNfts, setScannedNfts] = React.useState([]);
+
+  const [checkinData, setCheckinData] = React.useState('');
+
   const [isLoading, setIsLoading] = React.useState(true);
-  const { name: collectionName, id, contractAddress, description } = route.params;
+  const {name: collectionName, id, contractAddress, description} = route.params;
 
   const fetchData = async () => {
     try {
-      const { nfts, hasError, errorMessage } = await getScannedNfts(
+      const {nfts, hasError, errorMessage} = await getScannedNfts(
         id,
         contractAddress,
       );
@@ -29,8 +32,12 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
       if (hasError) {
         throw new Error(errorMessage);
       }
-
+      // console.log(nfts);
       setScannedNfts(nfts);
+      const chekingData = await countCheckIn(nfts);
+      console.log(JSON.stringify(chekingData, null, 2));
+      setCheckinData(chekingData);
+      console.log(checkinData);
     } catch (error) {
       console.log(error);
     }
@@ -40,28 +47,55 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
 
   React.useEffect(() => {
     fetchData();
+    console.log(checkinData);
   }, []);
   const qrCollection = () => {
-    navigation.navigate('QR', { id, collectionName, contractAddress, description });
+    navigation.navigate('QR', {
+      id,
+      collectionName,
+      contractAddress,
+      description,
+    });
   };
   const onPressGoBack = () => {
     navigation.goBack();
   };
+  // console.log(JSON.stringify(scannedNfts, null, 2));
 
-  const renderItem = ({ item: { name = '', owner = '' } }) => (
+  const renderItem = ({item: {name = '', owner = '', checink = ''}}) => (
     <View
       style={{
-        borderBottomColor: '#48484A',
-        borderBottomWidth: 1,
-        padding: 16,
+        flexDirection: 'row',
       }}>
-      <BoldCustomText
-        style={{ color: '#F2F2F7', fontSize: 18, marginBottom: 11 }}>
-        {name}
-      </BoldCustomText>
-      <CustomText style={{ color: '#8E8E93', fontSize: 18 }}>
-        {truncateAddress(owner)}
-      </CustomText>
+      <View
+        style={{
+          borderBottomColor: '#48484A',
+          borderBottomWidth: 1,
+          padding: 16,
+          flex: 2,
+        }}>
+        <BoldCustomText
+          style={{color: '#F2F2F7', fontSize: 18, marginBottom: 11}}>
+          {name}
+        </BoldCustomText>
+        <CustomText style={{color: '#8E8E93', fontSize: 18}}>
+          {truncateAddress(owner)}
+        </CustomText>
+      </View>
+
+      <View
+        style={{
+          borderBottomColor: '#48484A',
+          borderBottomWidth: 1,
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          paddingRight: 70,
+          flex: 2,
+        }}>
+        <CustomText style={{color: 'white', fontSize: 20}}>
+          {checink}
+        </CustomText>
+      </View>
     </View>
   );
 
@@ -97,9 +131,9 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
         </CustomText>
       </View>
 
-      {scannedNfts.length ? (
+      {checkinData.length ? (
         <FlatList
-          data={scannedNfts}
+          data={checkinData || ' '}
           renderItem={renderItem}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
@@ -141,7 +175,6 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
         }}>
         <CustomText>Generate QR Code</CustomText>
       </TouchableOpacity>
-
     </SafeAreaView>
   );
 };

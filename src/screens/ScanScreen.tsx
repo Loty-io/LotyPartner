@@ -11,11 +11,11 @@ import {
 
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
-import { truncateAddress, truncateStringIfNeeded } from '../helpers/utils';
-import { clearAll } from '../helpers/storage';
-import { getScannedNftCollections } from '../helpers/api';
+import {truncateAddress, truncateStringIfNeeded} from '../helpers/utils';
+import {clearAll} from '../helpers/storage';
+import {getScannedNftCollections} from '../helpers/api';
 
-const ScanScreen = ({ navigation, route }: any) => {
+const ScanScreen = ({navigation, route}: any) => {
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const hasScannedNft = !!route?.params?.hasScannedNft;
@@ -62,18 +62,18 @@ const ScanScreen = ({ navigation, route }: any) => {
 
   const onPressSettings = () => {
     const contractAddressArray = scannedNftCollections.map(
-      ({ contractAddress }) => contractAddress,
+      ({contractAddress}) => contractAddress,
     );
-    navigation.navigate('Settings', { contractAddressArray });
+    navigation.navigate('Settings', {contractAddressArray});
   };
 
   const onPressCollection = (
     id: string,
     name: string,
     contractAddress: string,
-    description: string
+    description: string,
   ) => {
-    navigation.navigate('Analytics', { id, name, contractAddress, description });
+    navigation.navigate('Analytics', {id, name, contractAddress, description});
   };
 
   const renderItem = ({
@@ -95,7 +95,7 @@ const ScanScreen = ({ navigation, route }: any) => {
         padding: 16,
       }}>
       <Image
-        source={{ uri: image }}
+        source={{uri: image}}
         style={{
           width: 102,
           height: 74,
@@ -109,10 +109,10 @@ const ScanScreen = ({ navigation, route }: any) => {
           width: '74%',
           paddingVertical: 2,
         }}>
-        <CustomText style={{ color: '#F2F2F7', fontSize: 20 }}>
+        <CustomText style={{color: '#F2F2F7', fontSize: 20}}>
           {name || truncateAddress(contractAddress)}
         </CustomText>
-        <CustomText style={{ color: '#F2F2F7', fontSize: 16 }}>
+        <CustomText style={{color: '#F2F2F7', fontSize: 16}}>
           {truncateStringIfNeeded(description, 80)}
         </CustomText>
       </View>
@@ -148,7 +148,7 @@ const ScanScreen = ({ navigation, route }: any) => {
           }}>
           QR Access
         </CustomText>
-        <TouchableOpacity onPress={onPressSettings} style={{ marginLeft: 42 }}>
+        <TouchableOpacity onPress={onPressSettings} style={{marginLeft: 42}}>
           <Image source={require('../assets/settings.png')} />
         </TouchableOpacity>
       </View>
