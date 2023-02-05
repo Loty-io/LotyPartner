@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   FlatList,
   RefreshControl,
+  Alert,
 } from 'react-native';
 
 import CustomText from '../components/CustomText';
@@ -56,8 +57,29 @@ const ScanScreen = ({navigation, route}: any) => {
   // };
 
   const onPressSignOut = () => {
-    clearAll();
-    navigation.goBack();
+    try {
+      Alert.alert(
+        'You are leaving...',
+        'Are you sure?',
+        [
+          {
+            text: 'Yes',
+            onPress:() => {
+              clearAll();
+              navigation.goBack();
+            }
+          },
+          {
+            text: 'No',
+            onPress: () => { console.log('Regresa a la sesion')}
+          }
+        ]
+      )
+   
+    
+  } catch (error) {
+    console.log('Error');
+  }
   };
 
   const onPressSettings = () => {

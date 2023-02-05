@@ -314,7 +314,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.loty.empresa;
+				PRODUCT_BUNDLE_IDENTIFIER = com.loty.lotypartnerapp;
 				PRODUCT_NAME = "Loty Partner";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -342,7 +342,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.loty.empresa;
+				PRODUCT_BUNDLE_IDENTIFIER = com.loty.lotypartnerapp;
 				PRODUCT_NAME = "Loty Partner";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
