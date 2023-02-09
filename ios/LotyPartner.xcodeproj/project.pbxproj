@@ -12,9 +12,9 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3FED4394CD25B704DBA77D89 /* Pods_LotyPartner_LotyPartnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30059B3E4F55F1524D902D5 /* Pods_LotyPartner_LotyPartnerTests.framework */; };
+		550BC9D5FA674F469E76AACC /* Bahnschrift_400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C681791372F647FFAE335485 /* Bahnschrift_400.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A30306A37332A15FDB661F76 /* Pods_LotyPartner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 367C2327B1F0441A434C7DAA /* Pods_LotyPartner.framework */; };
-		550BC9D5FA674F469E76AACC /* Bahnschrift_400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C681791372F647FFAE335485 /* Bahnschrift_400.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +44,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LotyPartner/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LotyPartner-LotyPartnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LotyPartner-LotyPartnerTests.release.xcconfig"; path = "Target Support Files/Pods-LotyPartner-LotyPartnerTests/Pods-LotyPartner-LotyPartnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		A30059B3E4F55F1524D902D5 /* Pods_LotyPartner_LotyPartnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LotyPartner_LotyPartnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C681791372F647FFAE335485 /* Bahnschrift_400.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Bahnschrift_400.ttf; path = ../src/assets/fonts/Bahnschrift_400.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		C681791372F647FFAE335485 /* Bahnschrift_400.ttf */ = {isa = PBXFileReference; name = "Bahnschrift_400.ttf"; path = "../src/assets/fonts/Bahnschrift_400.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,13 +152,12 @@
 			sourceTree = "<group>";
 		};
 		DF1D941C5DB84C08ABB43BCF /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				C681791372F647FFAE335485 /* Bahnschrift_400.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -463,6 +462,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BY269KHQL3;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LotyPartner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -475,7 +475,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.loty.lotypartnerapp;
 				PRODUCT_NAME = LotyPartner;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -490,6 +490,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BY269KHQL3;
 				INFOPLIST_FILE = LotyPartner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -501,7 +502,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.loty.lotypartnerapp;
 				PRODUCT_NAME = LotyPartner;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
