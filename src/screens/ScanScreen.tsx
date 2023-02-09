@@ -25,6 +25,8 @@ const ScanScreen = ({navigation, route}: any) => {
     try {
       const result = await getScannedNftCollections();
       setScannedNftCollections(result);
+
+      console.log(JSON.stringify(result, null, 2));
     } catch (error) {
       console.log(error);
     }
@@ -58,28 +60,24 @@ const ScanScreen = ({navigation, route}: any) => {
 
   const onPressSignOut = () => {
     try {
-      Alert.alert(
-        'You are leaving...',
-        'Are you sure?',
-        [
-          {
-            text: 'Yes',
-            onPress:() => {
-              clearAll();
-              navigation.goBack();
-            }
+      Alert.alert('You are leaving...', 'Are you sure?', [
+        {
+          text: 'Yes',
+          onPress: () => {
+            clearAll();
+            navigation.goBack();
           },
-          {
-            text: 'No',
-            onPress: () => { console.log('Regresa a la sesion')}
-          }
-        ]
-      )
-   
-    
-  } catch (error) {
-    console.log('Error');
-  }
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            console.log('Regresa a la sesion');
+          },
+        },
+      ]);
+    } catch (error) {
+      console.log('Error');
+    }
   };
 
   const onPressSettings = () => {
@@ -117,7 +115,7 @@ const ScanScreen = ({navigation, route}: any) => {
         padding: 16,
       }}>
       <Image
-        source={{uri: image}}
+        source={{uri: `${image}`}}
         style={{
           width: 102,
           height: 74,

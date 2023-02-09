@@ -27,7 +27,7 @@
               <action android:name="android.intent.action.VIEW" />
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
-              <data android:scheme="lotyw3a" />
+              <data android:scheme="lotyw3acommerce" />
           </intent-filter>
       </activity>
     </application>

@@ -9,17 +9,21 @@ import {
   Dimensions,
   Clipboard,
   RefreshControl,
+  Text,
+  Alert,
 } from 'react-native';
 
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
 import CustomTextInput from '../components/CustomTextInput';
-import { addContractAddressApi, deleteContractAddressApi, getScannedNftCollections } from '../helpers/api';
-import { showToast, truncateAddress } from '../helpers/utils';
+import {
+  addContractAddressApi,
+  deleteContractAddressApi,
+  getScannedNftCollections,
+} from '../helpers/api';
+import {showToast, truncateAddress} from '../helpers/utils';
 
-const SettingsScreen = ({ navigation, route }: any) => {
-
-
+const SettingsScreen = ({navigation, route}: any) => {
   const [isAdding, setIsAdding] = React.useState(false);
   const [contractAddress, setContractAddress] = React.useState('');
 
@@ -51,7 +55,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
   //*************************************************************** */
 
   const onPressGoBack = () => {
-    navigation.navigate('Scan', { hasScannedNft: true });
+    navigation.navigate('Scan', {hasScannedNft: true});
   };
 
   const onPressCopy = (contractAddress: string) => {
@@ -61,15 +65,28 @@ const SettingsScreen = ({ navigation, route }: any) => {
 
   const onPressDelete = async (contractAddr: string) => {
     try {
-      const { hasError, errorMessage } = await deleteContractAddressApi(
-        contractAddr,
-      );
+      Alert.alert('Delete this Contract...', 'Are you sure?', [
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const {hasError, errorMessage} = await deleteContractAddressApi(
+              contractAddr,
+            );
 
-      if (hasError) {
-        throw new Error(errorMessage);
-      }
+            if (hasError) {
+              throw new Error(errorMessage);
+            }
 
-      showToast('success', 'Removed correctly');
+            showToast('success', 'Removed correctly');
+          },
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            console.log('Regresa a la sesion');
+          },
+        },
+      ]);
     } catch (error) {
       console.log(error);
       showToast('error', 'Invalid address');
@@ -79,13 +96,12 @@ const SettingsScreen = ({ navigation, route }: any) => {
   const isBtnDisabled = !contractAddress || isAdding;
 
   const onPressAdd = async () => {
-
     console.log(contractAddress);
 
     try {
       console.log('InitAdd');
       const contractAddressArray = await scannedNftCollections.map(
-        ({ contractAddress, }) => contractAddress
+        ({contractAddress}) => contractAddress,
       );
       if (contractAddress && contractAddressArray.includes(contractAddress)) {
         showToast('error', 'Address Already Added');
@@ -94,7 +110,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
       }
 
       setIsAdding(true);
-      const { hasError, errorMessage } = await addContractAddressApi(
+      const {hasError, errorMessage} = await addContractAddressApi(
         contractAddress,
       );
 
@@ -113,12 +129,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
   };
 
   const imageSize = 18;
-  const renderItem = ({
-    item: {
-      name = '',
-      contractAddress = '',
-    }
-  }) => (
+  const renderItem = ({item: {name = '', contractAddress = ''}}) => (
     <View
       style={{
         width: Dimensions.get('window').width,
@@ -128,11 +139,11 @@ const SettingsScreen = ({ navigation, route }: any) => {
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-
-      <View style={{
-        width: '80%',
-        flexDirection: 'column',
-      }}>
+      <View
+        style={{
+          width: '80%',
+          flexDirection: 'column',
+        }}>
         <BoldCustomText
           style={{
             color: '#F2F2F7',
@@ -142,10 +153,11 @@ const SettingsScreen = ({ navigation, route }: any) => {
           }}>
           {name}
         </BoldCustomText>
-        <View style={{
-          width: '70%',
-          flexDirection: 'row',
-        }}>
+        <View
+          style={{
+            width: '70%',
+            flexDirection: 'row',
+          }}>
           <CustomText
             style={{
               color: '#8E8E93',
@@ -155,7 +167,9 @@ const SettingsScreen = ({ navigation, route }: any) => {
             }}>
             {truncateAddress(contractAddress)}
           </CustomText>
-          <TouchableOpacity onPress={() => onPressCopy(contractAddress)} style={{ marginTop: 3, width: imageSize }}>
+          <TouchableOpacity
+            onPress={() => onPressCopy(contractAddress)}
+            style={{marginTop: 3, width: imageSize}}>
             <Image source={require('../assets/copy.png')} />
           </TouchableOpacity>
         </View>
@@ -179,7 +193,6 @@ const SettingsScreen = ({ navigation, route }: any) => {
         />
       </TouchableOpacity>
     </View>
-
   );
 
   return (
@@ -330,9 +343,3 @@ const styles = StyleSheet.create({
 });
 
 export default SettingsScreen;
-
-
-
-
-
-
