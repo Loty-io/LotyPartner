@@ -15,6 +15,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 // import { getMagic } from './src/helpers/magic';
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 import CollectionQR from './src/screens/CollectionQR';
+import SplashScreen from 'react-native-splash-screen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,13 @@ const options = {
 };
 
 export default function App() {
+  React.useEffect(() => {
+    setTimeout(function () {
+      SplashScreen.hide();
+    }, 2000);
+    // SplashScreen.hide();
+  }, []);
+
   React.useEffect(() => {
     StatusBar.setBarStyle('light-content', true);
   }, []);
