@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="SplashBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xmm-dy-w4U">
-                                <rect key="frame" x="-38" y="-9" width="429" height="686"/>
+                                <rect key="frame" x="-38" y="-10" width="429" height="686"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" text="LOTY" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
@@ -43,7 +43,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="SplashBG.png" width="375" height="629"/>
+        <image name="SplashBG.png" width="281" height="471"/>
         <image name="logo.png" width="83" height="88"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

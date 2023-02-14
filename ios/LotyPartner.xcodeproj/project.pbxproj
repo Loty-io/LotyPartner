@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,8 +11,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		3E55E4B6299B226900D6E2AE /* SplashBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E55E4B5299B226900D6E2AE /* SplashBG.png */; };
-		3E55E4B8299B227100D6E2AE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E55E4B7299B227100D6E2AE /* logo.png */; };
+		3E55E4C7299B770600D6E2AE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E55E4C6299B770600D6E2AE /* logo.png */; };
+		3E55E4C9299B770D00D6E2AE /* SplashBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E55E4C8299B770D00D6E2AE /* SplashBG.png */; };
 		3FED4394CD25B704DBA77D89 /* Pods_LotyPartner_LotyPartnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30059B3E4F55F1524D902D5 /* Pods_LotyPartner_LotyPartnerTests.framework */; };
 		550BC9D5FA674F469E76AACC /* Bahnschrift_400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C681791372F647FFAE335485 /* Bahnschrift_400.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -41,8 +41,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LotyPartner/main.m; sourceTree = "<group>"; };
 		367C2327B1F0441A434C7DAA /* Pods_LotyPartner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LotyPartner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-LotyPartner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LotyPartner.debug.xcconfig"; path = "Target Support Files/Pods-LotyPartner/Pods-LotyPartner.debug.xcconfig"; sourceTree = "<group>"; };
-		3E55E4B5299B226900D6E2AE /* SplashBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashBG.png; path = ../../../Pictures/icons/SplashBG.png; sourceTree = "<group>"; };
-		3E55E4B7299B227100D6E2AE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../../Pictures/icons/logo.png; sourceTree = "<group>"; };
+		3E55E4C6299B770600D6E2AE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		3E55E4C8299B770D00D6E2AE /* SplashBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashBG.png; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-LotyPartner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LotyPartner.release.xcconfig"; path = "Target Support Files/Pods-LotyPartner/Pods-LotyPartner.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-LotyPartner-LotyPartnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LotyPartner-LotyPartnerTests.debug.xcconfig"; path = "Target Support Files/Pods-LotyPartner-LotyPartnerTests/Pods-LotyPartner-LotyPartnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LotyPartner/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -95,9 +95,8 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				3E55E4B7299B227100D6E2AE /* logo.png */,
-				3E55E4B5299B226900D6E2AE /* SplashBG.png */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				3E55E4C5299B76F600D6E2AE /* Assets */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -112,6 +111,15 @@
 				A30059B3E4F55F1524D902D5 /* Pods_LotyPartner_LotyPartnerTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3E55E4C5299B76F600D6E2AE /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3E55E4C8299B770D00D6E2AE /* SplashBG.png */,
+				3E55E4C6299B770600D6E2AE /* logo.png */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -227,7 +235,7 @@
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "LotyPartner" */;
-			compatibilityVersion = "Xcode 12.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -258,10 +266,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				3E55E4B8299B227100D6E2AE /* logo.png in Resources */,
+				3E55E4C7299B770600D6E2AE /* logo.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				550BC9D5FA674F469E76AACC /* Bahnschrift_400.ttf in Resources */,
-				3E55E4B6299B226900D6E2AE /* SplashBG.png in Resources */,
+				3E55E4C9299B770D00D6E2AE /* SplashBG.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
