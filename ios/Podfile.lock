@@ -282,6 +282,8 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
+  - react-native-splash-screen (3.3.0):
+    - React-Core
   - react-native-web-browser (1.1.0):
     - React-Core
   - react-native-webview (11.26.1):
@@ -407,6 +409,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - "react-native-web-browser (from `../node_modules/@toruslabs/react-native-web-browser`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -480,6 +483,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   react-native-web-browser:
     :path: "../node_modules/@toruslabs/react-native-web-browser"
   react-native-webview:
@@ -547,6 +552,7 @@ SPEC CHECKSUMS:
   React-logger: 97987f46779d8dd24656474ad0c43a5b459f31d6
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
+  react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-web-browser: 087b454e1e94b58b40ba73f54251d77486144d19
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
   React-perflogger: c7ccda3d1d1da837f7ff4e54e816022a6803ee87
