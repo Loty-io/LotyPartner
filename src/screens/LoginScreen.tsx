@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-
+//test Pull request
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
 import CustomTextInput from '../components/CustomTextInput';
