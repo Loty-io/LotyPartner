@@ -109,7 +109,6 @@ const SettingsScreen = ({navigation, route}: any) => {
         throw new Error(errorMessage);
       }
 
-      //setContractAddressArray([...contractAddressArray, contractAddress]);
       setContractAddress('');
       showToast('success', 'Added correctly');
     } catch (error) {
@@ -222,11 +221,6 @@ const SettingsScreen = ({navigation, route}: any) => {
                 )}>
                 {}
               </Button>
-              {/* <TouchableOpacity
-                onPress={() => onPressCopy(contractAddress)}
-                style={{marginTop: 3, width: imageSize}}>
-                <Image source={require('../assets/copy.png')} />
-              </TouchableOpacity> */}
             </View>
           </View>
           <Button
@@ -267,7 +261,6 @@ const SettingsScreen = ({navigation, route}: any) => {
           alignItems: 'center',
           height: 50,
           width: '100%',
-          // paddingHorizontal: 0,
           borderBottomColor: 'black',
           borderBottomWidth: 1,
           flexDirection: 'row',
@@ -304,15 +297,6 @@ const SettingsScreen = ({navigation, route}: any) => {
           }}>
           Enter Smart Contract Address
         </Text>
-        {/* <BoldCustomText
-          style={{
-            color: 'white',
-            fontSize: 17,
-            width: '100%',
-            marginVertical: 15,
-          }}>
-          Enter Smart Contract Address
-        </BoldCustomText> */}
         <TextInput
           style={styles.input}
           textColor={theme.colors.surface}
