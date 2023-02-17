@@ -12,6 +12,9 @@ import CameraScreen from './src/screens/CameraScreen';
 import CheckInScreen from './src/screens/CheckInScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
+
+import { Provider as PaperProvider } from 'react-native-paper';
+
 import CollectionQR from './src/screens/CollectionQR';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -74,6 +77,7 @@ export default function App() {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <StatusBar barStyle="light-content" />
+        {/* <magic.Relayer /> */}
 
         <Stack.Navigator>
           <Stack.Screen

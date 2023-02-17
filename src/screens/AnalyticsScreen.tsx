@@ -13,11 +13,10 @@ import BoldCustomText from '../components/BoldCustomText';
 import { countCheckIn, truncateAddress } from '../helpers/utils';
 import { getScannedNfts } from '../helpers/api';
 
-import { Button, Text, useTheme } from 'react-native-paper';
-import { AnimatedFAB } from 'react-native-paper';
+import { Button, Text, Card, Dialog, Portal } from 'react-native-paper';
+import theme from '../styles/theme';
 
-const AnalyticsScreen = ({ navigation, route, animateFrom }: any) => {
-  const theme = useTheme();
+const AnalyticsScreen = ({ navigation, route }: any) => {
   const [scannedNfts, setScannedNfts] = React.useState([]);
 
   const [checkinData, setCheckinData] = React.useState('');
@@ -83,12 +82,10 @@ const AnalyticsScreen = ({ navigation, route, animateFrom }: any) => {
           padding: 16,
           flex: 2,
         }}>
-        <Text variant="titleLarge" style={{ color: theme.colors.surface }}>
+        <Text variant="titleLarge" style={{ color: theme.colors.whiteVariant }}>
           {name}
         </Text>
-        <Text
-          variant="bodyLarge"
-          style={{ color: theme.colors.inverseOnSurface }}>
+        <Text variant="bodyLarge" style={{ color: theme.colors.variantGray }}>
           {truncateAddress(owner)}
         </Text>
       </View>
@@ -122,10 +119,6 @@ const AnalyticsScreen = ({ navigation, route, animateFrom }: any) => {
           flexDirection: 'row',
         }}>
         <Button
-          style={{
-            flex: 1,
-            alignItems: 'flex-start',
-          }}
           onPress={() => navigation.goBack()}
           icon={({}) => (
             <Image
@@ -135,11 +128,11 @@ const AnalyticsScreen = ({ navigation, route, animateFrom }: any) => {
           )}>
           {}
         </Button>
-        <Text style={{ color: theme.colors.surface, flex: 2 }}>
+        <Text style={{ color: theme.colors.whiteVariant }}>
           {' '}
           {collectionName}
         </Text>
-        <View style={{ flex: 1 }} />
+        <Button>{''}</Button>
       </View>
 
       {checkinData.length ? (

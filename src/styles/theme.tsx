@@ -48,8 +48,7 @@ const colors = {
   dark_gray: '#1C1C1E',
   white: '#F2F2F7',
   error: '#FF003E',
-  variantGray: '#8E8E93',
-  borderBottom: '#48484A',
+  gray_variant: '#8E8E93',
 };
 
 const theme = {
@@ -66,10 +65,9 @@ const theme = {
     outline: colors.primary,
     whiteVariant: colors.white,
     error: colors.error,
-    variantGray: colors.variantGray,
-    borderBottom: colors.borderBottom,
+    variantGray: colors.gray_variant,
   },
-  fonts: configureFonts({config: fontConfig, isV3: true}),
+  fonts: configureFonts({ config: fontConfig, isV3: true }),
 };
 
 export default theme;

@@ -8,13 +8,15 @@ import {
   Alert,
 } from 'react-native';
 
-import {truncateAddress, truncateStringIfNeeded} from '../helpers/utils';
-import {clearAll} from '../helpers/storage';
-import {getScannedNftCollections} from '../helpers/api';
+import { truncateAddress, truncateStringIfNeeded } from '../helpers/utils';
+import { clearAll } from '../helpers/storage';
+import { getScannedNftCollections } from '../helpers/api';
 
-import {Button, Text, Card, Dialog, Portal, useTheme} from 'react-native-paper';
+import { Button, Text, Card, Dialog, Portal } from 'react-native-paper';
 
-const ScanScreen = ({navigation, route}: any) => {
+import theme from '../styles/theme';
+
+const ScanScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -57,18 +59,20 @@ const ScanScreen = ({navigation, route}: any) => {
 
   const hideDialog = () => setshowDialog(false);
 
-  const dialogSignOut = (
+  const dialogSingOut = (
     <Portal>
       <Dialog
         visible={showDialog}
         onDismiss={hideDialog}
-        style={{backgroundColor: theme.colors.background}}>
+        style={{ backgroundColor: theme.colors.background }}>
         <Dialog.Content
-          style={{alignContent: 'space-around', alignItems: 'center'}}>
-          <Text variant="titleMedium" style={{color: theme.colors.primary}}>
+          style={{ alignContent: 'space-around', alignItems: 'center' }}>
+          <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             You are leaving. . .
           </Text>
-          <Text style={{color: theme.colors.whiteVariant}}>Are you sure?</Text>
+          <Text style={{ color: theme.colors.whiteVariant }}>
+            Are you sure?
+          </Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={() => setshowDialog(false)}>NO</Button>
@@ -89,9 +93,9 @@ const ScanScreen = ({navigation, route}: any) => {
 
   const onPressSettings = () => {
     const contractAddressArray = scannedNftCollections.map(
-      ({contractAddress}) => contractAddress,
+      ({ contractAddress }) => contractAddress,
     );
-    navigation.navigate('Settings', {contractAddressArray});
+    navigation.navigate('Settings', { contractAddressArray });
   };
 
   const onPressCollection = (
@@ -100,7 +104,12 @@ const ScanScreen = ({navigation, route}: any) => {
     contractAddress: string,
     description: string,
   ) => {
-    navigation.navigate('Analytics', {id, name, contractAddress, description});
+    navigation.navigate('Analytics', {
+      id,
+      name,
+      contractAddress,
+      description,
+    });
   };
 
   const renderItem = ({
@@ -116,7 +125,8 @@ const ScanScreen = ({navigation, route}: any) => {
       <Card
         style={{
           backgroundColor: theme.colors.background,
-          borderBottomColor: theme.colors.borderBottom,
+          borderRadius: 0,
+          borderBottomColor: '#48484A',
           borderBottomWidth: 1,
         }}
         onPress={() =>
@@ -124,7 +134,7 @@ const ScanScreen = ({navigation, route}: any) => {
         }>
         <Card.Content>
           <Image
-            source={{uri: `${image}`}}
+            source={{ uri: `${image}` }}
             style={{
               width: 102,
               height: 74,
@@ -148,7 +158,7 @@ const ScanScreen = ({navigation, route}: any) => {
             <Text
               variant="bodyLarge"
               style={{
-                color: theme.colors.primary,
+                color: theme.colors.whiteVariant,
               }}>
               {truncateStringIfNeeded(description, 80)}
             </Text>
@@ -159,8 +169,8 @@ const ScanScreen = ({navigation, route}: any) => {
   );
 
   return (
-    <SafeAreaView style={{backgroundColor: theme.colors.background, flex: 1}}>
-      {dialogSignOut}
+    <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
+      {dialogSingOut}
       <View
         style={{
           justifyContent: 'space-between',
@@ -171,25 +181,18 @@ const ScanScreen = ({navigation, route}: any) => {
           borderBottomWidth: 1,
           flexDirection: 'row',
         }}>
-        <TouchableOpacity onPress={onPressSignOut}>
-          <CustomText
-            style={{
-              color: '#69F6CC',
-              fontSize: 17,
-            }}>
-            Sign Out
-          </CustomText>
-        </TouchableOpacity>
-        <CustomText
-          style={{
-            color: 'white',
-            fontSize: 17,
-          }}>
-          My loyalty programs
-        </CustomText>
-        <TouchableOpacity onPress={onPressSettings} style={{marginLeft: 42}}>
-          <Image source={require('../assets/settings.png')} />
-        </TouchableOpacity>
+        <Button onPress={() => setshowDialog(true)}>Sing Out</Button>
+        <Text style={{ color: theme.colors.whiteVariant }}> QR Access</Text>
+        <Button
+          onPress={onPressSettings}
+          icon={({}) => (
+            <Image
+              source={require('../assets/settings.png')}
+              style={{ justifyContent: 'center', alignSelf: 'center' }}
+            />
+          )}>
+          {}
+        </Button>
       </View>
 
       {scannedNftCollections.length ? (
@@ -211,7 +214,7 @@ const ScanScreen = ({navigation, route}: any) => {
           }}>
           <Text
             variant="titleMedium"
-            style={{color: theme.colors.whiteVariant}}>
+            style={{ color: theme.colors.whiteVariant }}>
             {isLoading ? 'Loading...' : 'Nothing scanned yet'}
           </Text>
         </View>
@@ -221,21 +224,9 @@ const ScanScreen = ({navigation, route}: any) => {
         dark={false}
         mode="contained"
         onPress={onPressScan}
-        activeOpacity={0.7}
-        style={{
-          backgroundColor: '#69F6CC',
-          borderRadius: 24,
-          paddingVertical: 13,
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
-          marginBottom: 5,
-          bottom: 0,
-          left: 5,
-          right: 5,
-        }}>
-        <CustomText>Check-in</CustomText>
-      </TouchableOpacity>
+        style={{ marginBottom: 5 }}>
+        Scan QR code
+      </Button>
     </SafeAreaView>
   );
 };
