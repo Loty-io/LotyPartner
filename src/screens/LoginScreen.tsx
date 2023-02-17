@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import {Button, Card, Surface, Text, TextInput} from 'react-native-paper';
+//test Pull request
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
 import CustomTextInput from '../components/CustomTextInput';
@@ -22,7 +22,6 @@ import {DEV_MODE_PARAMS} from '../config';
 import {emailWeb3auth} from '../helpers/loginweb3auth';
 
 import RCP from '../helpers/web3auth';
-import theme from '../styles/theme';
 
 const INVALID_EMAIL = 'Invalid email';
 
@@ -62,12 +61,18 @@ const LoginScreen = ({navigation}: any) => {
     } catch (error) {
       setIsLoading(false);
     }
+
+    // storeStringValue('email', userEmail);
+    // navigation.navigate('ScanTabNavigator');
+    // setIsLoading(false);
   };
 
   React.useEffect(() => {
     const resolveAuth = async () => {
       setIsLoading(true);
       try {
+        // const emailInStorage = await getStringValue('email');
+        // await attemptLogin(emailInStorage);
         const token = await getStringValue('idtoken');
         const emailuser = await getStringValue('email');
         const publicAddress = await getStringValue('publicAddress');
@@ -128,14 +133,7 @@ const LoginScreen = ({navigation}: any) => {
                   paddingHorizontal: 16,
                   alignSelf: 'flex-start',
                 }}>
-                <Text
-                  variant="bodyMedium"
-                  style={{
-                    color: theme.colors.surfaceVariant,
-                    alignSelf: 'center',
-                  }}>
-                  For companies
-                </Text>
+                <CustomText>For companies</CustomText>
               </View>
               <View
                 style={{
@@ -144,43 +142,57 @@ const LoginScreen = ({navigation}: any) => {
                   alignItems: 'center',
                 }}>
                 <Image source={require('../assets/login-logo.png')} />
-                <Text
-                  variant="displayMedium"
-                  style={{color: theme.colors.surface, alignSelf: 'center'}}>
+                <CustomText
+                  style={{
+                    color: 'white',
+                    fontSize: 40,
+                    marginLeft: 15,
+                    marginTop: 2,
+                  }}>
                   LOTY
-                </Text>
+                </CustomText>
               </View>
-              <Text
-                variant="headlineLarge"
-                style={{color: theme.colors.surface}}>
+              <BoldCustomText
+                style={{
+                  color: 'white',
+                  fontSize: 34,
+                  lineHeight: 41,
+                  marginTop: 28,
+                }}>
                 The future of loyalty programs through
-              </Text>
-              <Text
-                variant="headlineLarge"
-                style={{color: theme.colors.primary}}>
+              </BoldCustomText>
+              <BoldCustomText
+                style={{
+                  color: '#69F6CC',
+                  fontSize: 34,
+                  lineHeight: 41,
+                }}>
                 NFTs
-              </Text>
+              </BoldCustomText>
             </View>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               style={styles.container}>
-              <TextInput
-                style={{
-                  marginVertical: 10,
-                }}
-                textColor={theme.colors.surface}
-                outlineColor={theme.colors.outlineVariant}
-                mode="outlined"
-                label="Email"
-                value={email}
-                placeholder="your_email@mail.com"
-                keyboardType="email-address"
+              <CustomTextInput
+                style={styles.input}
                 onChangeText={onChangeEmail}
-                theme={{roundness: 5}}
+                value={email}
+                placeholder="example@email.com"
+                keyboardType="email-address"
+                placeholderTextColor={'#EBEBF5'}
               />
-              <Button dark={false} mode="contained" onPress={onPressSignIn}>
-                Sing in/ Sing up
-              </Button>
+              <TouchableOpacity
+                onPress={onPressSignIn}
+                style={{
+                  backgroundColor: '#69F6CC',
+                  borderRadius: 24,
+                  paddingVertical: 13,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: Dimensions.get('window').height / 10,
+                }}>
+                <CustomText>Sign in / Sign up</CustomText>
+              </TouchableOpacity>
             </KeyboardAvoidingView>
           </>
         )}
