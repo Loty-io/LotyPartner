@@ -9,6 +9,7 @@ import {
   Dimensions,
   Clipboard,
   RefreshControl,
+  Text,
   Alert,
 } from 'react-native';
 
@@ -22,21 +23,9 @@ import {
 } from '../helpers/api';
 import {showToast, truncateAddress} from '../helpers/utils';
 
-import {
-  Button,
-  Text,
-  Card,
-  Dialog,
-  Portal,
-  TextInput,
-} from 'react-native-paper';
-import theme from '../styles/theme';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
 const SettingsScreen = ({navigation, route}: any) => {
   const [isAdding, setIsAdding] = React.useState(false);
   const [contractAddress, setContractAddress] = React.useState('');
-  const [deletecontractAddress, setDeleteContractAddress] = React.useState('');
 
   //*************************************************************** */
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
@@ -74,14 +63,34 @@ const SettingsScreen = ({navigation, route}: any) => {
     showToast('success', 'Contract Address Copied!');
   };
 
-  const onPressDelete = async () => {
-    const {hasError} = await deleteContractAddressApi(deletecontractAddress);
-    if (hasError) {
-      showToast('error', 'Something is wrong');
-      return;
+  const onPressDelete = async (contractAddr: string) => {
+    try {
+      Alert.alert('Delete this Contract...', 'Are you sure?', [
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const {hasError, errorMessage} = await deleteContractAddressApi(
+              contractAddr,
+            );
+
+            if (hasError) {
+              throw new Error(errorMessage);
+            }
+
+            showToast('success', 'Removed correctly');
+          },
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            console.log('Regresa a la sesion');
+          },
+        },
+      ]);
+    } catch (error) {
+      console.log(error);
+      showToast('error', 'Invalid address');
     }
-    setDeleteContractAddress('');
-    showToast('success', 'Removed correctly');
   };
 
   const isBtnDisabled = !contractAddress || isAdding;
@@ -118,172 +127,104 @@ const SettingsScreen = ({navigation, route}: any) => {
       setIsAdding(false);
     }
   };
-  const [showDialog, setshowDialog] = React.useState(false);
-
-  const hideDialog = () => setshowDialog(false);
-
-  const dialogDeleteContract = () => {
-    return (
-      <Portal>
-        <Dialog
-          visible={showDialog}
-          onDismiss={hideDialog}
-          style={{backgroundColor: theme.colors.background}}>
-          <Dialog.Content
-            style={{alignContent: 'space-around', alignItems: 'center'}}>
-            <Text variant="titleMedium" style={{color: theme.colors.primary}}>
-              Delete this Contract...
-            </Text>
-            <Text style={{color: theme.colors.whiteVariant}}>
-              Are you sure?
-            </Text>
-            <Text
-              variant="titleSmall"
-              style={{
-                color: theme.colors.variantGray,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              {deletecontractAddress}
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setshowDialog(false)}>NO</Button>
-            {/* Este text debe eliminartse, por el momento me da una solución */}
-            <Text>{'                                                   '}</Text>
-            <Button
-              textColor={theme.colors.error}
-              onPress={() => {
-                onPressDelete();
-                setshowDialog(false);
-              }}>
-              YES
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
-    );
-  };
 
   const imageSize = 18;
   const renderItem = ({item: {name = '', contractAddress = ''}}) => (
-    <Card
+    <View
       style={{
-        backgroundColor: theme.colors.background,
-        borderRadius: 0,
+        width: Dimensions.get('window').width,
         borderBottomColor: '#48484A',
         borderBottomWidth: 1,
+        padding: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
       }}>
-      <Card.Content>
+      <View
+        style={{
+          width: '80%',
+          flexDirection: 'column',
+        }}>
+        <BoldCustomText
+          style={{
+            color: '#F2F2F7',
+            fontSize: 18,
+            marginVertical: 11,
+            flex: 9,
+          }}>
+          {name}
+        </BoldCustomText>
         <View
           style={{
-            width: Dimensions.get('window').width,
-            padding: 16,
+            width: '70%',
             flexDirection: 'row',
-            alignItems: 'center',
           }}>
-          <View>
-            <Text
-              variant="titleLarge"
-              style={{
-                color: theme.colors.whiteVariant,
-                alignSelf: 'flex-start',
-                paddingBottom: 10,
-              }}>
-              {name}
-            </Text>
-            <View
-              style={{
-                width: '70%',
-                flexDirection: 'row',
-              }}>
-              <Text
-                variant="titleMedium"
-                style={{
-                  color: theme.colors.variantGray,
-                  alignSelf: 'flex-start',
-                  paddingRight: 10,
-                }}>
-                {truncateAddress(contractAddress)}
-              </Text>
-              <Button
-                style={{flex: 1}}
-                onPress={() => onPressCopy(contractAddress)}
-                icon={({}) => (
-                  <Image
-                    source={require('../assets/copy.png')}
-                    style={{
-                      width: 20,
-                      height: 20,
-                      justifyContent: 'center',
-                      alignSelf: 'center',
-                    }}
-                  />
-                )}>
-                {}
-              </Button>
-              {/* <TouchableOpacity
-                onPress={() => onPressCopy(contractAddress)}
-                style={{marginTop: 3, width: imageSize}}>
-                <Image source={require('../assets/copy.png')} />
-              </TouchableOpacity> */}
-            </View>
-          </View>
-          <Button
+          <CustomText
             style={{
-              flex: 1,
-              marginLeft: 5,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onPress={() => {
-              setshowDialog(true);
-              setDeleteContractAddress(contractAddress);
-            }}
-            icon={({}) => (
-              <Image
-                source={require('../assets/trash.png')}
-                style={{
-                  width: imageSize,
-                  height: imageSize,
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                }}
-              />
-            )}>
-            {}
-          </Button>
+              color: '#8E8E93',
+              fontSize: 15,
+              marginRight: 10,
+              marginTop: 3,
+            }}>
+            {truncateAddress(contractAddress)}
+          </CustomText>
+          <TouchableOpacity
+            onPress={() => onPressCopy(contractAddress)}
+            style={{marginTop: 3, width: imageSize}}>
+            <Image source={require('../assets/copy.png')} />
+          </TouchableOpacity>
         </View>
-      </Card.Content>
-    </Card>
+      </View>
+      <TouchableOpacity
+        onPress={() => onPressDelete(contractAddress)}
+        style={{
+          flex: 1,
+          marginLeft: 5,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: imageSize,
+          height: imageSize,
+        }}>
+        <Image
+          source={require('../assets/trash.png')}
+          style={{
+            width: imageSize,
+            height: imageSize,
+          }}
+        />
+      </TouchableOpacity>
+    </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      {dialogDeleteContract()}
       <View
         style={{
           justifyContent: 'space-between',
           alignItems: 'center',
           height: 50,
           width: '100%',
-          // paddingHorizontal: 0,
+          paddingHorizontal: 16,
           borderBottomColor: 'black',
           borderBottomWidth: 1,
           flexDirection: 'row',
         }}>
-        <Button
-          onPress={() => onPressGoBack()}
-          icon={({}) => (
-            <Image
-              source={require('../assets/arrow-back.png')}
-              style={{justifyContent: 'center', alignSelf: 'center'}}
-            />
-          )}>
-          {}
-        </Button>
-        <Text style={{color: theme.colors.whiteVariant}}>Settings</Text>
-        <Button>{''}</Button>
+        <TouchableOpacity onPress={onPressGoBack}>
+          <Image source={require('../assets/arrow-back.png')} />
+        </TouchableOpacity>
+        <CustomText
+          style={{
+            color: 'white',
+            fontSize: 17,
+          }}>
+          Settings
+        </CustomText>
+        <CustomText
+          style={{
+            color: '#1C1C1E',
+            fontSize: 17,
+          }}>
+          12
+        </CustomText>
       </View>
       <View
         style={{
@@ -295,16 +236,7 @@ const SettingsScreen = ({navigation, route}: any) => {
           paddingHorizontal: 10,
           width: '100%',
         }}>
-        <Text
-          variant="titleMedium"
-          style={{
-            color: theme.colors.whiteVariant,
-            alignSelf: 'flex-start',
-            marginVertical: 15,
-          }}>
-          Enter Smart Contract Address
-        </Text>
-        {/* <BoldCustomText
+        <BoldCustomText
           style={{
             color: 'white',
             fontSize: 17,
@@ -312,47 +244,43 @@ const SettingsScreen = ({navigation, route}: any) => {
             marginVertical: 15,
           }}>
           Enter Smart Contract Address
-        </BoldCustomText> */}
-        <TextInput
+        </BoldCustomText>
+        <CustomTextInput
           style={styles.input}
-          textColor={theme.colors.surface}
-          outlineColor={theme.colors.outlineVariant}
-          mode="outlined"
-          label="0x..."
+          onChangeText={setContractAddress}
           value={contractAddress}
           placeholder="0x..."
           keyboardType="default"
-          onChangeText={setContractAddress}
-          placeholderTextColor={theme.colors.whiteVariant}
-          theme={{roundness: 5}}
+          placeholderTextColor={'#EBEBF5'}
         />
-        <Button
+        <TouchableOpacity
           onPress={onPressAdd}
           disabled={isBtnDisabled}
-          dark={false}
-          mode="contained"
+          activeOpacity={0.7}
           style={{
-            backgroundColor: theme.colors.primary,
+            backgroundColor: '#69F6CC',
+            borderRadius: 24,
+            paddingVertical: 13,
             justifyContent: 'center',
             alignItems: 'center',
             marginBottom: 10,
             width: '100%',
             opacity: isBtnDisabled ? 0.5 : 1,
           }}>
-          {isAdding ? 'Adding...' : 'Add'}
-        </Button>
+          <CustomText>{isAdding ? 'Adding...' : 'Add'}</CustomText>
+        </TouchableOpacity>
       </View>
 
-      <Text
-        variant="titleMedium"
+      <BoldCustomText
         style={{
-          color: theme.colors.whiteVariant,
-          alignSelf: 'flex-start',
-          marginVertical: 15,
+          color: 'white',
+          fontSize: 17,
+          width: '100%',
+          marginTop: 20,
           paddingHorizontal: 16,
         }}>
         Your Smart Contract Addresses:
-      </Text>
+      </BoldCustomText>
 
       {scannedNftCollections.length ? (
         <FlatList
@@ -371,15 +299,14 @@ const SettingsScreen = ({navigation, route}: any) => {
             alignItems: 'center',
             flex: 1,
           }}>
-          <Text
-            variant="titleMedium"
+          <BoldCustomText
             style={{
-              color: theme.colors.whiteVariant,
+              color: 'white',
               fontSize: 18,
               textAlign: 'center',
             }}>
             {isLoading ? 'Loading...' : 'Nothing added yet'}
-          </Text>
+          </BoldCustomText>
         </View>
       )}
     </SafeAreaView>

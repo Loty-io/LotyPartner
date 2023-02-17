@@ -1,20 +1,20 @@
 import * as React from 'react';
 import {
   View,
+  StyleSheet,
   Image,
+  TouchableOpacity,
   SafeAreaView,
   FlatList,
   RefreshControl,
   Alert,
 } from 'react-native';
 
+import CustomText from '../components/CustomText';
+import BoldCustomText from '../components/BoldCustomText';
 import {truncateAddress, truncateStringIfNeeded} from '../helpers/utils';
 import {clearAll} from '../helpers/storage';
 import {getScannedNftCollections} from '../helpers/api';
-
-import {Button, Text, Card, Dialog, Portal} from 'react-native-paper';
-
-import theme from '../styles/theme';
 
 const ScanScreen = ({navigation, route}: any) => {
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
@@ -54,39 +54,31 @@ const ScanScreen = ({navigation, route}: any) => {
   const onPressScan = () => {
     navigation.navigate('Camera');
   };
-  const [showDialog, setshowDialog] = React.useState(false);
+  // const qrCollection = () => {
+  //   navigation.navigate('QR');
+  // };
 
-  const hideDialog = () => setshowDialog(false);
-
-  const dialogSingOut = (
-    <Portal>
-      <Dialog
-        visible={showDialog}
-        onDismiss={hideDialog}
-        style={{backgroundColor: theme.colors.background}}>
-        <Dialog.Content
-          style={{alignContent: 'space-around', alignItems: 'center'}}>
-          <Text variant="titleMedium" style={{color: theme.colors.primary}}>
-            You are leaving. . .
-          </Text>
-          <Text style={{color: theme.colors.whiteVariant}}>Are you sure?</Text>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={() => setshowDialog(false)}>NO</Button>
-          {/* Este text debe eliminartse, por el momento me da una solución */}
-          <Text>{'                                               '}</Text>
-          <Button
-            textColor={theme.colors.error}
-            onPress={() => {
-              clearAll();
-              navigation.goBack();
-            }}>
-            YES
-          </Button>
-        </Dialog.Actions>
-      </Dialog>
-    </Portal>
-  );
+  const onPressSignOut = () => {
+    try {
+      Alert.alert('You are leaving...', 'Are you sure?', [
+        {
+          text: 'Yes',
+          onPress: () => {
+            clearAll();
+            navigation.goBack();
+          },
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            console.log('Regresa a la sesion');
+          },
+        },
+      ]);
+    } catch (error) {
+      console.log('Error');
+    }
+  };
 
   const onPressSettings = () => {
     const contractAddressArray = scannedNftCollections.map(
@@ -113,78 +105,72 @@ const ScanScreen = ({navigation, route}: any) => {
       contractAddress = '',
     },
   }) => (
-    <>
-      <Card
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={() => onPressCollection(id, name, contractAddress, description)}
+      style={{
+        borderBottomColor: '#48484A',
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        padding: 16,
+      }}>
+      <Image
+        source={{uri: `${image}`}}
         style={{
-          backgroundColor: theme.colors.background,
-          borderRadius: 0,
-          borderBottomColor: '#48484A',
-          borderBottomWidth: 1,
+          width: 102,
+          height: 74,
+          borderRadius: 5,
         }}
-        onPress={() =>
-          onPressCollection(id, name, contractAddress, description)
-        }>
-        <Card.Content>
-          <Image
-            source={{uri: `${image}`}}
-            style={{
-              width: 102,
-              height: 74,
-              borderRadius: 5,
-            }}
-          />
-          <View
-            style={{
-              justifyContent: 'space-between',
-              marginLeft: 8,
-              width: '74%',
-              paddingVertical: 2,
-            }}>
-            <Text
-              variant="titleLarge"
-              style={{
-                color: theme.colors.whiteVariant,
-              }}>
-              {name || truncateAddress(contractAddress)}
-            </Text>
-            <Text
-              variant="bodyLarge"
-              style={{
-                color: theme.colors.whiteVariant,
-              }}>
-              {truncateStringIfNeeded(description, 80)}
-            </Text>
-          </View>
-        </Card.Content>
-      </Card>
-    </>
+      />
+      <View
+        style={{
+          justifyContent: 'space-between',
+          marginLeft: 8,
+          width: '74%',
+          paddingVertical: 2,
+        }}>
+        <CustomText style={{color: '#F2F2F7', fontSize: 20}}>
+          {name || truncateAddress(contractAddress)}
+        </CustomText>
+        <CustomText style={{color: '#F2F2F7', fontSize: 16}}>
+          {truncateStringIfNeeded(description, 80)}
+        </CustomText>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={{backgroundColor: theme.colors.background, flex: 1}}>
-      {dialogSingOut}
+    <SafeAreaView style={styles.container}>
       <View
         style={{
           justifyContent: 'space-between',
           alignItems: 'center',
           height: 50,
           width: '100%',
+          paddingHorizontal: 16,
           borderBottomColor: 'black',
           borderBottomWidth: 1,
           flexDirection: 'row',
         }}>
-        <Button onPress={() => setshowDialog(true)}>Sing Out</Button>
-        <Text style={{color: theme.colors.whiteVariant}}> QR Access</Text>
-        <Button
-          onPress={onPressSettings}
-          icon={({}) => (
-            <Image
-              source={require('../assets/settings.png')}
-              style={{justifyContent: 'center', alignSelf: 'center'}}
-            />
-          )}>
-          {}
-        </Button>
+        <TouchableOpacity onPress={onPressSignOut}>
+          <CustomText
+            style={{
+              color: '#69F6CC',
+              fontSize: 17,
+            }}>
+            Sign Out
+          </CustomText>
+        </TouchableOpacity>
+        <CustomText
+          style={{
+            color: 'white',
+            fontSize: 17,
+          }}>
+          QR Access
+        </CustomText>
+        <TouchableOpacity onPress={onPressSettings} style={{marginLeft: 42}}>
+          <Image source={require('../assets/settings.png')} />
+        </TouchableOpacity>
       </View>
 
       {scannedNftCollections.length ? (
@@ -204,23 +190,60 @@ const ScanScreen = ({navigation, route}: any) => {
             alignItems: 'center',
             flex: 1,
           }}>
-          <Text
-            variant="titleMedium"
-            style={{color: theme.colors.whiteVariant}}>
+          <BoldCustomText
+            style={{
+              color: 'white',
+              fontSize: 18,
+              textAlign: 'center',
+            }}>
             {isLoading ? 'Loading...' : 'Nothing scanned yet'}
-          </Text>
+          </BoldCustomText>
         </View>
       )}
 
-      <Button
-        dark={false}
-        mode="contained"
+      <TouchableOpacity
         onPress={onPressScan}
-        style={{marginBottom: 5}}>
-        Scan QR code
-      </Button>
+        activeOpacity={0.7}
+        style={{
+          backgroundColor: '#69F6CC',
+          borderRadius: 24,
+          paddingVertical: 13,
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          marginBottom: 5,
+          bottom: 0,
+          left: 5,
+          right: 5,
+        }}>
+        <CustomText>Scan QR code</CustomText>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1C1C1E',
+  },
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
+  },
+});
 
 export default ScanScreen;

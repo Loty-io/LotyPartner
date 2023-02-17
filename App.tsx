@@ -12,12 +12,10 @@ import CameraScreen from './src/screens/CameraScreen';
 import CheckInScreen from './src/screens/CheckInScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import {Provider as PaperProvider} from 'react-native-paper';
-
+// import { getMagic } from './src/helpers/magic';
+// import QRCodeScanner from 'react-native-qrcode-scanner';
 import CollectionQR from './src/screens/CollectionQR';
 import SplashScreen from 'react-native-splash-screen';
-
-import theme from './src/styles/theme';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -75,49 +73,43 @@ export default function App() {
   };
 
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <StatusBar barStyle="light-content" />
-        {/* <magic.Relayer /> */}
+    <NavigationContainer>
+      <StatusBar barStyle="light-content" />
+      {/* <magic.Relayer /> */}
 
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={options}
-          />
-          <Stack.Screen
-            name="ScanTabNavigator"
-            component={ScanTabNavigator}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-            }}
-          />
-          <Stack.Screen
-            name="Camera"
-            component={CameraScreen}
-            options={options}
-          />
-          <Stack.Screen name="QR" component={CollectionQR} options={options} />
-          <Stack.Screen
-            name="CheckIn"
-            component={CheckInScreen}
-            options={options}
-          />
-          <Stack.Screen
-            name="Analytics"
-            component={AnalyticsScreen}
-            options={options}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={options}
-          />
-        </Stack.Navigator>
-        <Toast />
-      </NavigationContainer>
-    </PaperProvider>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginScreen} options={options} />
+        <Stack.Screen
+          name="ScanTabNavigator"
+          component={ScanTabNavigator}
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="Camera"
+          component={CameraScreen}
+          options={options}
+        />
+        <Stack.Screen name="QR" component={CollectionQR} options={options} />
+        <Stack.Screen
+          name="CheckIn"
+          component={CheckInScreen}
+          options={options}
+        />
+        <Stack.Screen
+          name="Analytics"
+          component={AnalyticsScreen}
+          options={options}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={options}
+        />
+      </Stack.Navigator>
+      <Toast />
+    </NavigationContainer>
   );
 }
