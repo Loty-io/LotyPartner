@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-//test Pull request
+import {Button, Card, Surface, Text, TextInput} from 'react-native-paper';
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
 import CustomTextInput from '../components/CustomTextInput';
@@ -22,6 +22,7 @@ import {DEV_MODE_PARAMS} from '../config';
 import {emailWeb3auth} from '../helpers/loginweb3auth';
 
 import RCP from '../helpers/web3auth';
+import theme from '../styles/theme';
 
 const INVALID_EMAIL = 'Invalid email';
 
@@ -61,18 +62,12 @@ const LoginScreen = ({navigation}: any) => {
     } catch (error) {
       setIsLoading(false);
     }
-
-    // storeStringValue('email', userEmail);
-    // navigation.navigate('ScanTabNavigator');
-    // setIsLoading(false);
   };
 
   React.useEffect(() => {
     const resolveAuth = async () => {
       setIsLoading(true);
       try {
-        // const emailInStorage = await getStringValue('email');
-        // await attemptLogin(emailInStorage);
         const token = await getStringValue('idtoken');
         const emailuser = await getStringValue('email');
         const publicAddress = await getStringValue('publicAddress');
@@ -133,7 +128,14 @@ const LoginScreen = ({navigation}: any) => {
                   paddingHorizontal: 16,
                   alignSelf: 'flex-start',
                 }}>
-                <CustomText>For companies</CustomText>
+                <Text
+                  variant="bodyMedium"
+                  style={{
+                    color: theme.colors.surfaceVariant,
+                    alignSelf: 'center',
+                  }}>
+                  For companies
+                </Text>
               </View>
               <View
                 style={{
@@ -142,57 +144,43 @@ const LoginScreen = ({navigation}: any) => {
                   alignItems: 'center',
                 }}>
                 <Image source={require('../assets/login-logo.png')} />
-                <CustomText
-                  style={{
-                    color: 'white',
-                    fontSize: 40,
-                    marginLeft: 15,
-                    marginTop: 2,
-                  }}>
+                <Text
+                  variant="displayMedium"
+                  style={{color: theme.colors.surface, alignSelf: 'center'}}>
                   LOTY
-                </CustomText>
+                </Text>
               </View>
-              <BoldCustomText
-                style={{
-                  color: 'white',
-                  fontSize: 34,
-                  lineHeight: 41,
-                  marginTop: 28,
-                }}>
+              <Text
+                variant="headlineLarge"
+                style={{color: theme.colors.surface}}>
                 The future of loyalty programs through
-              </BoldCustomText>
-              <BoldCustomText
-                style={{
-                  color: '#69F6CC',
-                  fontSize: 34,
-                  lineHeight: 41,
-                }}>
+              </Text>
+              <Text
+                variant="headlineLarge"
+                style={{color: theme.colors.primary}}>
                 NFTs
-              </BoldCustomText>
+              </Text>
             </View>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               style={styles.container}>
-              <CustomTextInput
-                style={styles.input}
-                onChangeText={onChangeEmail}
-                value={email}
-                placeholder="example@email.com"
-                keyboardType="email-address"
-                placeholderTextColor={'#EBEBF5'}
-              />
-              <TouchableOpacity
-                onPress={onPressSignIn}
+              <TextInput
                 style={{
-                  backgroundColor: '#69F6CC',
-                  borderRadius: 24,
-                  paddingVertical: 13,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: Dimensions.get('window').height / 10,
-                }}>
-                <CustomText>Sign in / Sign up</CustomText>
-              </TouchableOpacity>
+                  marginVertical: 10,
+                }}
+                textColor={theme.colors.surface}
+                outlineColor={theme.colors.outlineVariant}
+                mode="outlined"
+                label="Email"
+                value={email}
+                placeholder="your_email@mail.com"
+                keyboardType="email-address"
+                onChangeText={onChangeEmail}
+                theme={{roundness: 5}}
+              />
+              <Button dark={false} mode="contained" onPress={onPressSignIn}>
+                Sing in/ Sing up
+              </Button>
             </KeyboardAvoidingView>
           </>
         )}

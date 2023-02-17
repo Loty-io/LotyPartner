@@ -13,6 +13,9 @@ import BoldCustomText from '../components/BoldCustomText';
 import {callCheckInApi} from '../helpers/api';
 import {showToast} from '../helpers/utils';
 
+import {Button, Text, Card} from 'react-native-paper';
+import theme from '../styles/theme';
+
 const CheckInScreen = ({navigation, route}: any) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const {name, description, image, qrCodeData} = route.params;
@@ -56,6 +59,18 @@ const CheckInScreen = ({navigation, route}: any) => {
             borderBottomWidth: 1,
             flexDirection: 'row',
           }}>
+          {/* <Button onPress={() => {}}>Sing Out</Button>
+          <Text style={{color: theme.colors.whiteVariant}}> QR Access</Text>
+          <Button
+            onPress={() => {}}
+            icon={({}) => (
+              <Image
+                source={require('../assets/settings.png')}
+                style={{justifyContent: 'center', alignSelf: 'center'}}
+              />
+            )}>
+            {}
+          </Button> */}
           <TouchableOpacity onPress={onPressGoBack}>
             <Image source={require('../assets/arrow-back.png')} />
           </TouchableOpacity>
@@ -64,7 +79,8 @@ const CheckInScreen = ({navigation, route}: any) => {
               color: 'white',
               fontSize: 17,
             }}>
-            {name}
+            {/* {name} */}
+            loty
           </CustomText>
           <CustomText
             style={{
