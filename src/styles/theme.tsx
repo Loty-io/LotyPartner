@@ -48,7 +48,8 @@ const colors = {
   dark_gray: '#1C1C1E',
   white: '#F2F2F7',
   error: '#FF003E',
-  gray_variant: '#8E8E93',
+  variantGray: '#8E8E93',
+  borderBottom: '#48484A',
 };
 
 const theme = {
@@ -65,7 +66,8 @@ const theme = {
     outline: colors.primary,
     whiteVariant: colors.white,
     error: colors.error,
-    variantGray: colors.gray_variant,
+    variantGray: colors.variantGray,
+    borderBottom: colors.borderBottom,
   },
   fonts: configureFonts({ config: fontConfig, isV3: true }),
 };

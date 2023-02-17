@@ -8,7 +8,6 @@ import {
   Dimensions,
   Clipboard,
   RefreshControl,
-  Alert,
 } from 'react-native';
 
 import {
@@ -26,8 +25,7 @@ import {
   Portal,
   TextInput,
 } from 'react-native-paper';
-import theme from '../styles/theme';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useTheme } from 'react-native-paper';
 
 const SettingsScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
