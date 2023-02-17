@@ -12,14 +12,9 @@ import { truncateAddress, truncateStringIfNeeded } from '../helpers/utils';
 import { clearAll } from '../helpers/storage';
 import { getScannedNftCollections } from '../helpers/api';
 
-import {
-  Button,
-  Text,
-  Card,
-  Dialog,
-  Portal,
-  useTheme,
-} from 'react-native-paper';
+import { Button, Text, Card, Dialog, Portal } from 'react-native-paper';
+
+import theme from '../styles/theme';
 
 const ScanScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
@@ -64,7 +59,7 @@ const ScanScreen = ({ navigation, route }: any) => {
 
   const hideDialog = () => setshowDialog(false);
 
-  const dialogSignOut = (
+  const dialogSingOut = (
     <Portal>
       <Dialog
         visible={showDialog}
@@ -130,7 +125,8 @@ const ScanScreen = ({ navigation, route }: any) => {
       <Card
         style={{
           backgroundColor: theme.colors.background,
-          borderBottomColor: theme.colors.borderBottom,
+          borderRadius: 0,
+          borderBottomColor: '#48484A',
           borderBottomWidth: 1,
         }}
         onPress={() =>
@@ -162,7 +158,7 @@ const ScanScreen = ({ navigation, route }: any) => {
             <Text
               variant="bodyLarge"
               style={{
-                color: theme.colors.primary,
+                color: theme.colors.whiteVariant,
               }}>
               {truncateStringIfNeeded(description, 80)}
             </Text>
@@ -174,7 +170,7 @@ const ScanScreen = ({ navigation, route }: any) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
-      {dialogSignOut}
+      {dialogSingOut}
       <View
         style={{
           justifyContent: 'space-between',
@@ -185,7 +181,7 @@ const ScanScreen = ({ navigation, route }: any) => {
           borderBottomWidth: 1,
           flexDirection: 'row',
         }}>
-        <Button onPress={() => setshowDialog(true)}>Sign Out</Button>
+        <Button onPress={() => setshowDialog(true)}>Sing Out</Button>
         <Text style={{ color: theme.colors.whiteVariant }}> QR Access</Text>
         <Button
           onPress={onPressSettings}
