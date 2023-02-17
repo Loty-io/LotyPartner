@@ -14,6 +14,9 @@ import BoldCustomText from '../components/BoldCustomText';
 import {countCheckIn, truncateAddress} from '../helpers/utils';
 import {getScannedNfts} from '../helpers/api';
 
+import {Button, Text, Card, Dialog, Portal} from 'react-native-paper';
+import theme from '../styles/theme';
+
 const AnalyticsScreen = ({navigation, route}: any) => {
   const [scannedNfts, setScannedNfts] = React.useState([]);
 
@@ -74,13 +77,12 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           padding: 16,
           flex: 2,
         }}>
-        <BoldCustomText
-          style={{color: '#F2F2F7', fontSize: 18, marginBottom: 11}}>
+        <Text variant="titleLarge" style={{color: theme.colors.whiteVariant}}>
           {name}
-        </BoldCustomText>
-        <CustomText style={{color: '#8E8E93', fontSize: 18}}>
+        </Text>
+        <Text variant="bodyLarge" style={{color: theme.colors.variantGray}}>
           {truncateAddress(owner)}
-        </CustomText>
+        </Text>
       </View>
 
       <View
@@ -92,9 +94,9 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           paddingRight: 70,
           flex: 2,
         }}>
-        <CustomText style={{color: 'white', fontSize: 20}}>
+        <Text variant="bodyLarge" style={{color: theme.colors.primary}}>
           {checink}
-        </CustomText>
+        </Text>
       </View>
     </View>
   );
@@ -107,33 +109,30 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           alignItems: 'center',
           height: 50,
           width: '100%',
-          paddingHorizontal: 16,
           borderBottomColor: 'black',
           borderBottomWidth: 1,
           flexDirection: 'row',
         }}>
-        <TouchableOpacity onPress={onPressGoBack}>
-          <Image source={require('../assets/arrow-back.png')} />
-        </TouchableOpacity>
-        <CustomText
-          style={{
-            color: 'white',
-            fontSize: 17,
-          }}>
+        <Button
+          onPress={() => navigation.goBack()}
+          icon={({}) => (
+            <Image
+              source={require('../assets/arrow-back.png')}
+              style={{justifyContent: 'center', alignSelf: 'center'}}
+            />
+          )}>
+          {}
+        </Button>
+        <Text style={{color: theme.colors.whiteVariant}}>
+          {' '}
           {collectionName}
-        </CustomText>
-        <CustomText
-          style={{
-            color: '#1C1C1E',
-            fontSize: 17,
-          }}>
-          12
-        </CustomText>
+        </Text>
+        <Button>{''}</Button>
       </View>
 
       {checkinData.length ? (
         <FlatList
-          data={checkinData || ' '}
+          data={checkinData}
           renderItem={renderItem}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
