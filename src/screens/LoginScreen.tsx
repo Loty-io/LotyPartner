@@ -180,7 +180,7 @@ const LoginScreen = ({ navigation }: any) => {
                 theme={{ roundness: 5 }}
               />
               <Button dark={false} mode="contained" onPress={onPressSignIn}>
-                Sing in/ Sing up
+                Sign in/ Sign up
               </Button>
             </KeyboardAvoidingView>
           </>

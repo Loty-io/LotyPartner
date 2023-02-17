@@ -76,7 +76,6 @@ export default function App() {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <StatusBar barStyle="light-content" />
-        {/* <magic.Relayer /> */}
 
         <Stack.Navigator>
           <Stack.Screen
