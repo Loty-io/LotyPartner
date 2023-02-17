@@ -9,21 +9,24 @@ import {
   RefreshControl,
 } from 'react-native';
 
-import CustomText from '../components/CustomText';
+
 import BoldCustomText from '../components/BoldCustomText';
 import {countCheckIn, truncateAddress} from '../helpers/utils';
 import {getScannedNfts} from '../helpers/api';
 
-import {Button, Text, Card, Dialog, Portal} from 'react-native-paper';
-import theme from '../styles/theme';
+import {Button, Text, useTheme} from 'react-native-paper';
+import {AnimatedFAB} from 'react-native-paper';
 
-const AnalyticsScreen = ({navigation, route}: any) => {
+const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
+  const theme = useTheme();
   const [scannedNfts, setScannedNfts] = React.useState([]);
 
   const [checkinData, setCheckinData] = React.useState('');
 
   const [isLoading, setIsLoading] = React.useState(true);
   const {name: collectionName, id, contractAddress, description} = route.params;
+  const [floatinButtonExtend, setFloatinButtonExtend] = React.useState(false);
+  const fabStyle = {[animateFrom]: 16};
 
   const fetchData = async () => {
     try {
@@ -63,7 +66,6 @@ const AnalyticsScreen = ({navigation, route}: any) => {
   const onPressGoBack = () => {
     navigation.goBack();
   };
-  // console.log(JSON.stringify(scannedNfts, null, 2));
 
   const renderItem = ({item: {name = '', owner = '', checink = ''}}) => (
     <View
@@ -77,22 +79,24 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           padding: 16,
           flex: 2,
         }}>
-        <Text variant="titleLarge" style={{color: theme.colors.whiteVariant}}>
+        <Text variant="titleLarge" style={{color: theme.colors.surface}}>
           {name}
         </Text>
-        <Text variant="bodyLarge" style={{color: theme.colors.variantGray}}>
+        <Text
+          variant="bodyLarge"
+          style={{color: theme.colors.inverseOnSurface}}>
           {truncateAddress(owner)}
         </Text>
       </View>
 
       <View
         style={{
-          borderBottomColor: '#48484A',
+          borderBottomColor: theme.colors.primary,
           borderBottomWidth: 1,
           alignItems: 'flex-end',
           justifyContent: 'center',
           paddingRight: 70,
-          flex: 2,
+          flex: 1,
         }}>
         <Text variant="bodyLarge" style={{color: theme.colors.primary}}>
           {checink}
@@ -114,6 +118,10 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           flexDirection: 'row',
         }}>
         <Button
+          style={{
+            flex: 1,
+            alignItems: 'flex-start',
+          }}
           onPress={() => navigation.goBack()}
           icon={({}) => (
             <Image
@@ -123,11 +131,11 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           )}>
           {}
         </Button>
-        <Text style={{color: theme.colors.whiteVariant}}>
+        <Text style={{color: theme.colors.surface, flex: 2}}>
           {' '}
           {collectionName}
         </Text>
-        <Button>{''}</Button>
+        <View style={{flex: 1}} />
       </View>
 
       {checkinData.length ? (
@@ -157,23 +165,32 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           </BoldCustomText>
         </View>
       )}
-      <TouchableOpacity
-        onPress={qrCollection}
-        activeOpacity={0.7}
-        style={{
-          backgroundColor: '#69F6CC',
-          borderRadius: 24,
-          paddingVertical: 13,
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
-          marginBottom: 5,
-          bottom: 0,
-          left: 5,
-          right: 5,
-        }}>
-        <CustomText>Generate QR Code</CustomText>
-      </TouchableOpacity>
+
+      <AnimatedFAB
+        color={theme.colors.background}
+        icon={({}) => (
+          <Image
+            source={require('../assets/qr-code-bottom-tab.png')}
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              // backgroundColor: theme.colors.background,
+              borderRadius: 2,
+            }}
+          />
+        )}
+        label={'Generate QR'}
+        extended={floatinButtonExtend}
+        onPress={() => {
+          !floatinButtonExtend
+            ? setFloatinButtonExtend(true)
+            : (setFloatinButtonExtend(false), qrCollection());
+        }}
+        visible={true}
+        animateFrom={'right'}
+        // iconMode={'static'}
+        style={{...styles.fabStyle, backgroundColor: theme.colors.primary}}
+      />
     </SafeAreaView>
   );
 };
@@ -182,6 +199,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1C1C1E',
+  },
+  fabStyle: {
+    bottom: 50,
+    right: 16,
+    position: 'absolute',
   },
   centerText: {
     flex: 1,

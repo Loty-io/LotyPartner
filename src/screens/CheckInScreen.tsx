@@ -59,18 +59,6 @@ const CheckInScreen = ({navigation, route}: any) => {
             borderBottomWidth: 1,
             flexDirection: 'row',
           }}>
-          {/* <Button onPress={() => {}}>Sing Out</Button>
-          <Text style={{color: theme.colors.whiteVariant}}> QR Access</Text>
-          <Button
-            onPress={() => {}}
-            icon={({}) => (
-              <Image
-                source={require('../assets/settings.png')}
-                style={{justifyContent: 'center', alignSelf: 'center'}}
-              />
-            )}>
-            {}
-          </Button> */}
           <TouchableOpacity onPress={onPressGoBack}>
             <Image source={require('../assets/arrow-back.png')} />
           </TouchableOpacity>

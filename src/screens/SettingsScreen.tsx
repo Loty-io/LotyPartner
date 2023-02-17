@@ -3,18 +3,13 @@ import {
   View,
   StyleSheet,
   Image,
-  TouchableOpacity,
   SafeAreaView,
   FlatList,
   Dimensions,
   Clipboard,
   RefreshControl,
-  Alert,
 } from 'react-native';
 
-import CustomText from '../components/CustomText';
-import BoldCustomText from '../components/BoldCustomText';
-import CustomTextInput from '../components/CustomTextInput';
 import {
   addContractAddressApi,
   deleteContractAddressApi,
@@ -30,10 +25,10 @@ import {
   Portal,
   TextInput,
 } from 'react-native-paper';
-import theme from '../styles/theme';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {useTheme} from 'react-native-paper';
 
 const SettingsScreen = ({navigation, route}: any) => {
+  const theme = useTheme();
   const [isAdding, setIsAdding] = React.useState(false);
   const [contractAddress, setContractAddress] = React.useState('');
   const [deletecontractAddress, setDeleteContractAddress] = React.useState('');

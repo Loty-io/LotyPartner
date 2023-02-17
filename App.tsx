@@ -32,7 +32,6 @@ export default function App() {
     setTimeout(function () {
       SplashScreen.hide();
     }, 2000);
-    // SplashScreen.hide();
   }, []);
 
   React.useEffect(() => {
@@ -78,7 +77,6 @@ export default function App() {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <StatusBar barStyle="light-content" />
-        {/* <magic.Relayer /> */}
 
         <Stack.Navigator>
           <Stack.Screen
