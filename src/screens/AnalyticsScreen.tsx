@@ -168,12 +168,12 @@ const AnalyticsScreen = ({navigation, route}: any) => {
           justifyContent: 'center',
           alignItems: 'center',
           position: 'absolute',
-          marginBottom: 5,
+          marginBottom: 20,
           bottom: 0,
           left: 5,
           right: 5,
         }}>
-        <CustomText>Generate QR Code</CustomText>
+        <CustomText>Invite new customer</CustomText>
       </TouchableOpacity>
     </SafeAreaView>
   );

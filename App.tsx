@@ -12,15 +12,12 @@ import CameraScreen from './src/screens/CameraScreen';
 import CheckInScreen from './src/screens/CheckInScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-// import { getMagic } from './src/helpers/magic';
-// import QRCodeScanner from 'react-native-qrcode-scanner';
 import CollectionQR from './src/screens/CollectionQR';
 import SplashScreen from 'react-native-splash-screen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// const magic = getMagic();
 const options = {
   headerShown: false,
 };
@@ -30,7 +27,6 @@ export default function App() {
     setTimeout(function () {
       SplashScreen.hide();
     }, 2000);
-    // SplashScreen.hide();
   }, []);
 
   React.useEffect(() => {
@@ -45,13 +41,13 @@ export default function App() {
       <Tab.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({focused}) => {
-            if ((focused || !focused) && route.name === 'Scan') {
+            if ((focused || !focused) && route.name === 'Account') {
               const size = 20;
 
               return (
                 <Image
-                  style={{width: size, height: size}}
-                  source={require('./src/assets/qr-code-bottom-tab.png')}
+                  style={{width: size, height: size, tintColor: 'white'}}
+                  source={require('./src/assets/account.png')}
                 />
               );
             }
@@ -67,7 +63,7 @@ export default function App() {
           tabBarInactiveTintColor: 'gray',
           tabBarActiveBackgroundColor: '#1C1C1E',
         })}>
-        <Tab.Screen name="Scan" component={ScanScreen} options={options} />
+        <Tab.Screen name="Account" component={ScanScreen} options={options} />
       </Tab.Navigator>
     );
   };

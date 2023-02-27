@@ -166,7 +166,7 @@ const ScanScreen = ({navigation, route}: any) => {
             color: 'white',
             fontSize: 17,
           }}>
-          QR Access
+          My loyalty programs
         </CustomText>
         <TouchableOpacity onPress={onPressSettings} style={{marginLeft: 42}}>
           <Image source={require('../assets/settings.png')} />
@@ -216,7 +216,7 @@ const ScanScreen = ({navigation, route}: any) => {
           left: 5,
           right: 5,
         }}>
-        <CustomText>Scan QR code</CustomText>
+        <CustomText>Check-in</CustomText>
       </TouchableOpacity>
     </SafeAreaView>
   );
