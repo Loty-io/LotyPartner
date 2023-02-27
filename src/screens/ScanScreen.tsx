@@ -171,18 +171,25 @@ const ScanScreen = ({navigation, route}: any) => {
           borderBottomWidth: 1,
           flexDirection: 'row',
         }}>
-        <Button onPress={() => setshowDialog(true)}>Sign Out</Button>
-        <Text style={{color: theme.colors.whiteVariant}}> QR Access</Text>
-        <Button
-          onPress={onPressSettings}
-          icon={({}) => (
-            <Image
-              source={require('../assets/settings.png')}
-              style={{justifyContent: 'center', alignSelf: 'center'}}
-            />
-          )}>
-          {}
-        </Button>
+        <TouchableOpacity onPress={onPressSignOut}>
+          <CustomText
+            style={{
+              color: '#69F6CC',
+              fontSize: 17,
+            }}>
+            Sign Out
+          </CustomText>
+        </TouchableOpacity>
+        <CustomText
+          style={{
+            color: 'white',
+            fontSize: 17,
+          }}>
+          My loyalty programs
+        </CustomText>
+        <TouchableOpacity onPress={onPressSettings} style={{marginLeft: 42}}>
+          <Image source={require('../assets/settings.png')} />
+        </TouchableOpacity>
       </View>
 
       {scannedNftCollections.length ? (
@@ -214,9 +221,21 @@ const ScanScreen = ({navigation, route}: any) => {
         dark={false}
         mode="contained"
         onPress={onPressScan}
-        style={{marginBottom: 5}}>
-        Scan QR code
-      </Button>
+        activeOpacity={0.7}
+        style={{
+          backgroundColor: '#69F6CC',
+          borderRadius: 24,
+          paddingVertical: 13,
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          marginBottom: 5,
+          bottom: 0,
+          left: 5,
+          right: 5,
+        }}>
+        <CustomText>Check-in</CustomText>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

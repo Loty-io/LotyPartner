@@ -169,32 +169,23 @@ const AnalyticsScreen = ({ navigation, route, animateFrom }: any) => {
           </BoldCustomText>
         </View>
       )}
-
-      <AnimatedFAB
-        color={theme.colors.background}
-        icon={({}) => (
-          <Image
-            source={require('../assets/qr_code_scanner.png')}
-            style={{
-              justifyContent: 'center',
-              alignSelf: 'center',
-              // backgroundColor: theme.colors.background,
-              borderRadius: 2,
-            }}
-          />
-        )}
-        label={'Generate QR'}
-        extended={floatinButtonExtend}
-        onPress={() => {
-          !floatinButtonExtend
-            ? setFloatinButtonExtend(true)
-            : (setFloatinButtonExtend(false), qrCollection());
-        }}
-        visible={true}
-        animateFrom={'right'}
-        // iconMode={'static'}
-        style={{ ...styles.fabStyle, backgroundColor: theme.colors.primary }}
-      />
+      <TouchableOpacity
+        onPress={qrCollection}
+        activeOpacity={0.7}
+        style={{
+          backgroundColor: '#69F6CC',
+          borderRadius: 24,
+          paddingVertical: 13,
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          marginBottom: 20,
+          bottom: 0,
+          left: 5,
+          right: 5,
+        }}>
+        <CustomText>Invite new customer</CustomText>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
