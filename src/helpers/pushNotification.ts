@@ -1,16 +1,11 @@
-import { Pusher, PusherEvent } from '@pusher/pusher-websocket-react-native';
 import * as PushAPI from '@pushprotocol/restapi';
 
 import {
   CAIP10,
   CHANNEL_ADDRESS,
-  PUSHER_CHANNEL_NAME,
-  PUSHER_CLUSTER_DATA,
-  PUSHER_KEY,
 } from '../config';
 import { showToast } from './utils';
 
-const pusher = Pusher.getInstance();
 
 export const signChannel = async (key: string, publicAddress: string) => {
   const ethers = require('ethers');
@@ -32,20 +27,4 @@ export const signChannel = async (key: string, publicAddress: string) => {
   });
 };
 
-export const pusherInitConnection = async () => {
-  await pusher.init({
-    apiKey: PUSHER_KEY,
-    cluster: PUSHER_CLUSTER_DATA,
-  });
-  await pusher.connect();
-  pusherChannelSuscribe();
-};
 
-const pusherChannelSuscribe = async () => {
-  await pusher.subscribe({
-    channelName: PUSHER_CHANNEL_NAME,
-    onEvent(event: PusherEvent) {
-      showToast('success', `${event.data}`);
-    },
-  });
-};

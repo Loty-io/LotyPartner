@@ -12,22 +12,22 @@ import {
   Keyboard,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import {Button, Card, Surface, Text, TextInput} from 'react-native-paper';
+import { Button, Card, Surface, Text, TextInput } from 'react-native-paper';
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
 import CustomTextInput from '../components/CustomTextInput';
-import {validateEmail, showToast} from '../helpers/utils';
-import {getStringValue, storeStringValue} from '../helpers/storage';
-import {DEV_MODE_PARAMS} from '../config';
-import {emailWeb3auth} from '../helpers/loginweb3auth';
+import { validateEmail, showToast } from '../helpers/utils';
+import { getStringValue, storeStringValue } from '../helpers/storage';
+import { DEV_MODE_PARAMS } from '../config';
+import { emailWeb3auth } from '../helpers/loginweb3auth';
 
 import RCP from '../helpers/web3auth';
 import theme from '../styles/theme';
-import {pusherInitConnection, signChannel} from '../helpers/pushNotification';
+import { pusherInitConnection, signChannel } from '../helpers/pushNotification';
 
 const INVALID_EMAIL = 'Invalid email';
 
-const LoginScreen = ({navigation}: any) => {
+const LoginScreen = ({ navigation }: any) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [email, onChangeEmail] = React.useState(
     false ? DEV_MODE_PARAMS.email : '',
@@ -121,8 +121,8 @@ const LoginScreen = ({navigation}: any) => {
           <ActivityIndicator color="white" size="large" />
         ) : (
           <>
-            <View style={{flex: 1}} />
-            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <View style={{ flex: 1 }} />
+            <View style={{ flex: 1, justifyContent: 'center' }}>
               <View
                 style={{
                   backgroundColor: '#F2F2F7',
@@ -149,18 +149,18 @@ const LoginScreen = ({navigation}: any) => {
                 <Image source={require('../assets/login-logo.png')} />
                 <Text
                   variant="displayMedium"
-                  style={{color: theme.colors.surface, alignSelf: 'center'}}>
+                  style={{ color: theme.colors.surface, alignSelf: 'center' }}>
                   LOTY
                 </Text>
               </View>
               <Text
                 variant="headlineLarge"
-                style={{color: theme.colors.surface}}>
+                style={{ color: theme.colors.surface }}>
                 The future of loyalty programs through
               </Text>
               <Text
                 variant="headlineLarge"
-                style={{color: theme.colors.primary}}>
+                style={{ color: theme.colors.primary }}>
                 NFTs
               </Text>
             </View>
@@ -169,7 +169,7 @@ const LoginScreen = ({navigation}: any) => {
               style={styles.container}>
               <TextInput
                 style={{
-                  marginVertical: 10,
+                  marginVertical: 5,
                 }}
                 textColor={theme.colors.surface}
                 outlineColor={theme.colors.outlineVariant}
@@ -179,7 +179,7 @@ const LoginScreen = ({navigation}: any) => {
                 placeholder="your_email@mail.com"
                 keyboardType="email-address"
                 onChangeText={onChangeEmail}
-                theme={{roundness: 5}}
+                theme={{ roundness: 5 }}
               />
               <Button dark={false} mode="contained" onPress={onPressSignIn}>
                 Sign in/ Sign up
