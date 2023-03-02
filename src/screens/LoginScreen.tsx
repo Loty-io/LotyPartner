@@ -23,7 +23,7 @@ import { emailWeb3auth } from '../helpers/loginweb3auth';
 
 import RCP from '../helpers/web3auth';
 import theme from '../styles/theme';
-import { pusherInitConnection, signChannel } from '../helpers/pushNotification';
+import {  signChannel } from '../helpers/pushNotification';
 
 const INVALID_EMAIL = 'Invalid email';
 
@@ -52,7 +52,6 @@ const LoginScreen = ({ navigation }: any) => {
         publicAddress = '' + address;
         signChannel(info.privKey as string, publicAddress);
         console.log(publicAddress);
-        pusherInitConnection();
         storeStringValue('publicAddress', publicAddress);
         storeStringValue('email', userEmail);
         storeStringValue('idtoken', userInfo);
