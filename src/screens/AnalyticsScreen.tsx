@@ -9,28 +9,32 @@ import {
   RefreshControl,
 } from 'react-native';
 
-
 import BoldCustomText from '../components/BoldCustomText';
-import {countCheckIn, truncateAddress} from '../helpers/utils';
-import {getScannedNfts} from '../helpers/api';
+import { countCheckIn, truncateAddress } from '../helpers/utils';
+import { getScannedNfts } from '../helpers/api';
 
-import {Button, Text, useTheme} from 'react-native-paper';
-import {AnimatedFAB} from 'react-native-paper';
+import { Button, Text, useTheme } from 'react-native-paper';
+import { AnimatedFAB } from 'react-native-paper';
 
-const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
+const AnalyticsScreen = ({ navigation, route, animateFrom }: any) => {
   const theme = useTheme();
   const [scannedNfts, setScannedNfts] = React.useState([]);
 
   const [checkinData, setCheckinData] = React.useState('');
 
   const [isLoading, setIsLoading] = React.useState(true);
-  const {name: collectionName, id, contractAddress, description} = route.params;
+  const {
+    name: collectionName,
+    id,
+    contractAddress,
+    description,
+  } = route.params;
   const [floatinButtonExtend, setFloatinButtonExtend] = React.useState(false);
-  const fabStyle = {[animateFrom]: 16};
+  const fabStyle = { [animateFrom]: 16 };
 
   const fetchData = async () => {
     try {
-      const {nfts, hasError, errorMessage} = await getScannedNfts(
+      const { nfts, hasError, errorMessage } = await getScannedNfts(
         id,
         contractAddress,
       );
@@ -67,7 +71,7 @@ const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
     navigation.goBack();
   };
 
-  const renderItem = ({item: {name = '', owner = '', checink = ''}}) => (
+  const renderItem = ({ item: { name = '', owner = '', checink = '' } }) => (
     <View
       style={{
         flexDirection: 'row',
@@ -79,12 +83,12 @@ const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
           padding: 16,
           flex: 2,
         }}>
-        <Text variant="titleLarge" style={{color: theme.colors.surface}}>
+        <Text variant="titleLarge" style={{ color: theme.colors.surface }}>
           {name}
         </Text>
         <Text
           variant="bodyLarge"
-          style={{color: theme.colors.inverseOnSurface}}>
+          style={{ color: theme.colors.inverseOnSurface }}>
           {truncateAddress(owner)}
         </Text>
       </View>
@@ -98,7 +102,7 @@ const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
           paddingRight: 70,
           flex: 1,
         }}>
-        <Text variant="bodyLarge" style={{color: theme.colors.primary}}>
+        <Text variant="bodyLarge" style={{ color: theme.colors.primary }}>
           {checink}
         </Text>
       </View>
@@ -126,16 +130,16 @@ const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
           icon={({}) => (
             <Image
               source={require('../assets/arrow-back.png')}
-              style={{justifyContent: 'center', alignSelf: 'center'}}
+              style={{ justifyContent: 'center', alignSelf: 'center' }}
             />
           )}>
           {}
         </Button>
-        <Text style={{color: theme.colors.surface, flex: 2}}>
+        <Text style={{ color: theme.colors.surface, flex: 2 }}>
           {' '}
           {collectionName}
         </Text>
-        <View style={{flex: 1}} />
+        <View style={{ flex: 1 }} />
       </View>
 
       {checkinData.length ? (
@@ -170,7 +174,7 @@ const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
         color={theme.colors.background}
         icon={({}) => (
           <Image
-            source={require('../assets/qr-code-bottom-tab.png')}
+            source={require('../assets/qr_code_scanner.png')}
             style={{
               justifyContent: 'center',
               alignSelf: 'center',
@@ -189,7 +193,7 @@ const AnalyticsScreen = ({navigation, route, animateFrom}: any) => {
         visible={true}
         animateFrom={'right'}
         // iconMode={'static'}
-        style={{...styles.fabStyle, backgroundColor: theme.colors.primary}}
+        style={{ ...styles.fabStyle, backgroundColor: theme.colors.primary }}
       />
     </SafeAreaView>
   );
