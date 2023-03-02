@@ -174,7 +174,7 @@ const AnalyticsScreen = ({ navigation, route, animateFrom }: any) => {
         color={theme.colors.background}
         icon={({}) => (
           <Image
-            source={require('../assets/qr-code-bottom-tab.png')}
+            source={require('../assets/qr_code_scanner.png')}
             style={{
               justifyContent: 'center',
               alignSelf: 'center',

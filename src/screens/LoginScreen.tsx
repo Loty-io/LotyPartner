@@ -23,6 +23,7 @@ import { emailWeb3auth } from '../helpers/loginweb3auth';
 
 import RCP from '../helpers/web3auth';
 import theme from '../styles/theme';
+import { signChannel } from '../helpers/pushNotification';
 
 const INVALID_EMAIL = 'Invalid email';
 
@@ -167,7 +168,7 @@ const LoginScreen = ({ navigation }: any) => {
               style={styles.container}>
               <TextInput
                 style={{
-                  marginVertical: 10,
+                  marginVertical: 5,
                 }}
                 textColor={theme.colors.surface}
                 outlineColor={theme.colors.outlineVariant}
