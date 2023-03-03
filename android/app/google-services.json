@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "709902842439",
+    "project_id": "loty-7e8e8",
+    "storage_bucket": "loty-7e8e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709902842439:android:92c4cf21e4736953da4f62",
+        "android_client_info": {
+          "package_name": "com.lotypartner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709902842439-b0t9b84st9hvtbcornth61e7ssurbavb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv3Mi0n2GMlDRSavldu2vK-sQ8E4P_U08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709902842439-b0t9b84st9hvtbcornth61e7ssurbavb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "709902842439-2ldna3iijuofjqajr7eogb721ir28cv5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.loty.lotyuser"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709902842439:android:be4913f3ed7c2245da4f62",
+        "android_client_info": {
+          "package_name": "com.lotyuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709902842439-b0t9b84st9hvtbcornth61e7ssurbavb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv3Mi0n2GMlDRSavldu2vK-sQ8E4P_U08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709902842439-b0t9b84st9hvtbcornth61e7ssurbavb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "709902842439-2ldna3iijuofjqajr7eogb721ir28cv5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.loty.lotyuser"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

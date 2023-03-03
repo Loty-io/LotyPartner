@@ -18,6 +18,7 @@ import CollectionQR from './src/screens/CollectionQR';
 import SplashScreen from 'react-native-splash-screen';
 
 import theme from './src/styles/theme';
+import { pushController } from './src/helpers/pushController';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
+    pushController();
     StatusBar.setBarStyle('light-content', true);
   }, []);
 
