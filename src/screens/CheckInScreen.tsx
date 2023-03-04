@@ -10,26 +10,23 @@ import {
 
 import CustomText from '../components/CustomText';
 import BoldCustomText from '../components/BoldCustomText';
-import {callCheckInApi} from '../helpers/api';
-import {showToast} from '../helpers/utils';
+import { callCheckInApi } from '../helpers/api';
+import { showToast } from '../helpers/utils';
 
-import {Button, Text, Card} from 'react-native-paper';
-import theme from '../styles/theme';
-
-const CheckInScreen = ({navigation, route}: any) => {
+const CheckInScreen = ({ navigation, route }: any) => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const {name, description, image, qrCodeData} = route.params;
+  const { name, description, image, qrCodeData } = route.params;
 
   const onPressCheckIn = async () => {
     try {
       setIsLoading(true);
-      const {hasError, errorMessage} = await callCheckInApi(qrCodeData);
+      const { hasError, errorMessage } = await callCheckInApi(qrCodeData);
 
       if (hasError) {
         throw new Error(errorMessage);
       }
 
-      navigation.navigate('Scan', {hasScannedNft: true});
+      navigation.navigate('Scan', { hasScannedNft: true });
       showToast('success', 'Scanned correctly');
     } catch (error) {
       const errorMessage =
@@ -87,7 +84,7 @@ const CheckInScreen = ({navigation, route}: any) => {
             marginTop: 20,
           }}>
           <Image
-            source={{uri: image}}
+            source={{ uri: image }}
             style={{
               width: '100%',
               aspectRatio: 1,
