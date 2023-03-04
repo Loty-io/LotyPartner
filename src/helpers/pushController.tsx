@@ -1,8 +1,10 @@
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { Platform } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 
 
 export const pushController=()=>{
+  console.log('hola etraste');
     // Must be outside of any component LifeCycle (such as `componentDidMount`).
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -15,9 +17,9 @@ PushNotification.configure({
     console.log('NOTIFICATION:', notification);
 
     // process the notification
-
+    console.log('aqui esta');
     // (required) Called when a remote is received or opened, or local notification is opened
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
+    //notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
@@ -30,7 +32,7 @@ PushNotification.configure({
 
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
   onRegistrationError: function (err) {
-    console.error(err.message, err);
+    console.error(err.message, 'holaaaaaa', err);
   },
 
   // IOS ONLY (optional): default: all - Permissions to register.
@@ -51,7 +53,8 @@ PushNotification.configure({
    * - if you are not using remote notification or do not have Firebase installed, use this:
    *     requestPermissions: Platform.OS === 'ios'
    */
-  requestPermissions: true,
+  requestPermissions: Platform.OS === 'ios'
 });
 
 }
+
