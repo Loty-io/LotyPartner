@@ -378,7 +378,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
               memberships. This action is not reversible."
         confirmBtnText="Erase Forever"
         onConfirm={deleteUser}>
-        Borrar Usuario
+        Delete user
       </DialogButton>
     </SafeAreaView>
   );
