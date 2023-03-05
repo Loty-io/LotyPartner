@@ -8,7 +8,7 @@
  # Install dependencies using Homebrew. This is MUST! Do not delete.
  brew install node npm cocoapods fastlane
 
- # Install yarn and pods dependencies.
+ # Install npm and pods dependencies.
  # If you're using Flutter or Swift 
  # just install pods by "pod install" command 
  ls && cd .. && npm install && pod install
