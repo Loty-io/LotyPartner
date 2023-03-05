@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: yarn --frozen-lockfile
+      - run: npm install
 
       - name: Pod install
         run: cd ios && pod install
