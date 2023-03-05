@@ -10,9 +10,12 @@ import {
   RefreshControl,
 } from 'react-native';
 
+import { clearAll } from '../helpers/storage';
+
 import {
   addContractAddressApi,
   deleteContractAddressApi,
+  deletePartner,
   getScannedNftCollections,
 } from '../helpers/api';
 import { showToast, truncateAddress } from '../helpers/utils';
@@ -26,6 +29,7 @@ import {
   TextInput,
 } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
+import DialogButton from '../components/DialogButton';
 
 const SettingsScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
@@ -60,8 +64,14 @@ const SettingsScreen = ({ navigation, route }: any) => {
 
   //*************************************************************** */
 
+  const deleteUser = async () => {
+    await deletePartner();
+    clearAll();
+    navigation.navigate('Login');
+  };
+
   const onPressGoBack = () => {
-    navigation.navigate('Scan', { hasScannedNft: true });
+    navigation.navigate('Account', { hasScannedNft: true });
   };
 
   const onPressCopy = (contractAddress: string) => {
@@ -361,6 +371,15 @@ const SettingsScreen = ({ navigation, route }: any) => {
           </Text>
         </View>
       )}
+      <DialogButton
+        titleText="Are you sure you want to delete your user forever?"
+        bodyText="Doing so will remove all your usage data for the platform,
+              including all the customers you scanned, as well as your loyalty
+              memberships. This action is not reversible."
+        confirmBtnText="Erase Forever"
+        onConfirm={deleteUser}>
+        Borrar Usuario
+      </DialogButton>
     </SafeAreaView>
   );
 };
