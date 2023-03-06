@@ -4,18 +4,13 @@ import {
   View,
   StyleSheet,
   Image,
-  TouchableOpacity,
-  Dimensions,
   ActivityIndicator,
   Platform,
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { Button, Card, Surface, Text, TextInput } from 'react-native-paper';
-import CustomText from '../components/CustomText';
-import BoldCustomText from '../components/BoldCustomText';
-import CustomTextInput from '../components/CustomTextInput';
+import { Button, Text, TextInput } from 'react-native-paper';
 import { validateEmail, showToast } from '../helpers/utils';
 import { getStringValue, storeStringValue } from '../helpers/storage';
 import { DEV_MODE_PARAMS } from '../config';
@@ -23,7 +18,7 @@ import { emailWeb3auth } from '../helpers/loginweb3auth';
 
 import RCP from '../helpers/web3auth';
 import theme from '../styles/theme';
-import {  signChannel } from '../helpers/pushNotification';
+import { signChannel } from '../helpers/pushNotification';
 
 const INVALID_EMAIL = 'Invalid email';
 

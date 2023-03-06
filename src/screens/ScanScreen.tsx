@@ -8,13 +8,20 @@ import {
   Alert,
 } from 'react-native';
 
-import {truncateAddress, truncateStringIfNeeded} from '../helpers/utils';
-import {clearAll} from '../helpers/storage';
-import {getScannedNftCollections} from '../helpers/api';
+import { truncateAddress, truncateStringIfNeeded } from '../helpers/utils';
+import { clearAll } from '../helpers/storage';
+import { getScannedNftCollections } from '../helpers/api';
 
-import {Button, Text, Card, Dialog, Portal, useTheme} from 'react-native-paper';
+import {
+  Button,
+  Text,
+  Card,
+  Dialog,
+  Portal,
+  useTheme,
+} from 'react-native-paper';
 
-const ScanScreen = ({navigation, route}: any) => {
+const ScanScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -62,13 +69,15 @@ const ScanScreen = ({navigation, route}: any) => {
       <Dialog
         visible={showDialog}
         onDismiss={hideDialog}
-        style={{backgroundColor: theme.colors.background}}>
+        style={{ backgroundColor: theme.colors.background }}>
         <Dialog.Content
-          style={{alignContent: 'space-around', alignItems: 'center'}}>
-          <Text variant="titleMedium" style={{color: theme.colors.primary}}>
+          style={{ alignContent: 'space-around', alignItems: 'center' }}>
+          <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             You are leaving. . .
           </Text>
-          <Text style={{color: theme.colors.whiteVariant}}>Are you sure?</Text>
+          <Text style={{ color: theme.colors.whiteVariant }}>
+            Are you sure?
+          </Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={() => setshowDialog(false)}>NO</Button>
@@ -89,9 +98,9 @@ const ScanScreen = ({navigation, route}: any) => {
 
   const onPressSettings = () => {
     const contractAddressArray = scannedNftCollections.map(
-      ({contractAddress}) => contractAddress,
+      ({ contractAddress }) => contractAddress,
     );
-    navigation.navigate('Settings', {contractAddressArray});
+    navigation.navigate('Settings', { contractAddressArray });
   };
 
   const onPressCollection = (
@@ -100,7 +109,12 @@ const ScanScreen = ({navigation, route}: any) => {
     contractAddress: string,
     description: string,
   ) => {
-    navigation.navigate('Analytics', {id, name, contractAddress, description});
+    navigation.navigate('Analytics', {
+      id,
+      name,
+      contractAddress,
+      description,
+    });
   };
 
   const renderItem = ({
@@ -124,7 +138,7 @@ const ScanScreen = ({navigation, route}: any) => {
         }>
         <Card.Content>
           <Image
-            source={{uri: `${image}`}}
+            source={{ uri: `${image}` }}
             style={{
               width: 102,
               height: 74,
@@ -159,7 +173,7 @@ const ScanScreen = ({navigation, route}: any) => {
   );
 
   return (
-    <SafeAreaView style={{backgroundColor: theme.colors.background, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
       {dialogSignOut}
       <View
         style={{
@@ -172,13 +186,13 @@ const ScanScreen = ({navigation, route}: any) => {
           flexDirection: 'row',
         }}>
         <Button onPress={() => setshowDialog(true)}>Sign Out</Button>
-        <Text style={{color: theme.colors.whiteVariant}}> QR Access</Text>
+        <Text style={{ color: theme.colors.whiteVariant }}> QR Access</Text>
         <Button
           onPress={onPressSettings}
           icon={({}) => (
             <Image
               source={require('../assets/settings.png')}
-              style={{justifyContent: 'center', alignSelf: 'center'}}
+              style={{ justifyContent: 'center', alignSelf: 'center' }}
             />
           )}>
           {}
@@ -204,7 +218,7 @@ const ScanScreen = ({navigation, route}: any) => {
           }}>
           <Text
             variant="titleMedium"
-            style={{color: theme.colors.whiteVariant}}>
+            style={{ color: theme.colors.whiteVariant }}>
             {isLoading ? 'Loading...' : 'Nothing scanned yet'}
           </Text>
         </View>
@@ -214,7 +228,7 @@ const ScanScreen = ({navigation, route}: any) => {
         dark={false}
         mode="contained"
         onPress={onPressScan}
-        style={{marginBottom: 5}}>
+        style={{ marginBottom: 5 }}>
         Scan QR code
       </Button>
     </SafeAreaView>

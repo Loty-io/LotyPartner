@@ -10,12 +10,15 @@ import {
   RefreshControl,
 } from 'react-native';
 
+import { clearAll } from '../helpers/storage';
+
 import {
   addContractAddressApi,
   deleteContractAddressApi,
+  deletePartner,
   getScannedNftCollections,
 } from '../helpers/api';
-import {showToast, truncateAddress} from '../helpers/utils';
+import { showToast, truncateAddress } from '../helpers/utils';
 
 import {
   Button,
@@ -25,9 +28,10 @@ import {
   Portal,
   TextInput,
 } from 'react-native-paper';
-import {useTheme} from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
+import DialogButton from '../components/DialogButton';
 
-const SettingsScreen = ({navigation, route}: any) => {
+const SettingsScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
   const [isAdding, setIsAdding] = React.useState(false);
   const [contractAddress, setContractAddress] = React.useState('');
@@ -60,8 +64,14 @@ const SettingsScreen = ({navigation, route}: any) => {
 
   //*************************************************************** */
 
+  const deleteUser = async () => {
+    await deletePartner();
+    clearAll();
+    navigation.navigate('Login');
+  };
+
   const onPressGoBack = () => {
-    navigation.navigate('Scan', {hasScannedNft: true});
+    navigation.navigate('Account', { hasScannedNft: true });
   };
 
   const onPressCopy = (contractAddress: string) => {
@@ -70,7 +80,7 @@ const SettingsScreen = ({navigation, route}: any) => {
   };
 
   const onPressDelete = async () => {
-    const {hasError} = await deleteContractAddressApi(deletecontractAddress);
+    const { hasError } = await deleteContractAddressApi(deletecontractAddress);
     if (hasError) {
       showToast('error', 'Something is wrong');
       return;
@@ -87,7 +97,7 @@ const SettingsScreen = ({navigation, route}: any) => {
     try {
       console.log('InitAdd');
       const contractAddressArray = await scannedNftCollections.map(
-        ({contractAddress}) => contractAddress,
+        ({ contractAddress }) => contractAddress,
       );
       if (contractAddress && contractAddressArray.includes(contractAddress)) {
         showToast('error', 'Address Already Added');
@@ -96,7 +106,7 @@ const SettingsScreen = ({navigation, route}: any) => {
       }
 
       setIsAdding(true);
-      const {hasError, errorMessage} = await addContractAddressApi(
+      const { hasError, errorMessage } = await addContractAddressApi(
         contractAddress,
       );
 
@@ -122,13 +132,13 @@ const SettingsScreen = ({navigation, route}: any) => {
         <Dialog
           visible={showDialog}
           onDismiss={hideDialog}
-          style={{backgroundColor: theme.colors.background}}>
+          style={{ backgroundColor: theme.colors.background }}>
           <Dialog.Content
-            style={{alignContent: 'space-around', alignItems: 'center'}}>
-            <Text variant="titleMedium" style={{color: theme.colors.primary}}>
+            style={{ alignContent: 'space-around', alignItems: 'center' }}>
+            <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
               Delete this Contract...
             </Text>
-            <Text style={{color: theme.colors.whiteVariant}}>
+            <Text style={{ color: theme.colors.whiteVariant }}>
               Are you sure?
             </Text>
             <Text
@@ -160,7 +170,7 @@ const SettingsScreen = ({navigation, route}: any) => {
   };
 
   const imageSize = 18;
-  const renderItem = ({item: {name = '', contractAddress = ''}}) => (
+  const renderItem = ({ item: { name = '', contractAddress = '' } }) => (
     <Card
       style={{
         backgroundColor: theme.colors.background,
@@ -201,7 +211,7 @@ const SettingsScreen = ({navigation, route}: any) => {
                 {truncateAddress(contractAddress)}
               </Text>
               <Button
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 onPress={() => onPressCopy(contractAddress)}
                 icon={({}) => (
                   <Image
@@ -265,12 +275,12 @@ const SettingsScreen = ({navigation, route}: any) => {
           icon={({}) => (
             <Image
               source={require('../assets/arrow-back.png')}
-              style={{justifyContent: 'center', alignSelf: 'center'}}
+              style={{ justifyContent: 'center', alignSelf: 'center' }}
             />
           )}>
           {}
         </Button>
-        <Text style={{color: theme.colors.whiteVariant}}>Settings</Text>
+        <Text style={{ color: theme.colors.whiteVariant }}>Settings</Text>
         <Button>{''}</Button>
       </View>
       <View
@@ -303,7 +313,7 @@ const SettingsScreen = ({navigation, route}: any) => {
           keyboardType="default"
           onChangeText={setContractAddress}
           placeholderTextColor={theme.colors.whiteVariant}
-          theme={{roundness: 5}}
+          theme={{ roundness: 5 }}
         />
         <Button
           onPress={onPressAdd}
@@ -361,6 +371,15 @@ const SettingsScreen = ({navigation, route}: any) => {
           </Text>
         </View>
       )}
+      <DialogButton
+        titleText="Are you sure you want to delete your user forever?"
+        bodyText="Doing so will remove all your usage data for the platform,
+              including all the customers you scanned, as well as your loyalty
+              memberships. This action is not reversible."
+        confirmBtnText="Erase Forever"
+        onConfirm={deleteUser}>
+        Delete user
+      </DialogButton>
     </SafeAreaView>
   );
 };

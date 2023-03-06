@@ -69,7 +69,7 @@ const theme = {
     variantGray: colors.variantGray,
     borderBottom: colors.borderBottom,
   },
-  fonts: configureFonts({config: fontConfig, isV3: true}),
+  fonts: configureFonts({ config: fontConfig, isV3: true }),
 };
 
 export default theme;
