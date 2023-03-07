@@ -19,6 +19,13 @@ import SplashScreen from 'react-native-splash-screen';
 
 import theme from './src/styles/theme';
 
+
+import firebase from '@react-native-firebase/app'; 
+import PushNotification from 'react-native-push-notification'; 
+import {Platform} from 'react-native'; 
+import {FirebaseMessagingTypes} from '@react-native-firebase/messaging'; 
+import PushNotificationIOS from '@react-native-community/push-notification-ios'; 
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +34,61 @@ const options = {
 };
 
 export default function App() {
+
+  const getToken = () => { 
+    firebase .messaging() 
+    .getToken(firebase.app().options.messagingSenderId) 
+    .then(x => console.log(x)) 
+    .catch(e => console.log(e)); 
+}; 
+const registerForRemoteMessages = () => { 
+    firebase 
+    .messaging() 
+    .registerDeviceForRemoteMessages() 
+    .then(() => { 
+        console.log('Registered'); 
+        requestPermissions(); 
+    }) 
+    .catch(e => console.log(e)); 
+}; 
+const requestPermissions = () => { 
+    firebase 
+    .messaging() 
+    .requestPermission() 
+    .then((status: FirebaseMessagingTypes.AuthorizationStatus) => { 
+        if (status === 1) { 
+            console.log('Authorized'); 
+            onMessage(); 
+        } else { 
+            console.log('Not authorized'); 
+        } 
+    }) 
+    .catch(e => console.log(e)); 
+}; 
+const onMessage = () => { 
+    firebase.messaging()
+    .onMessage(response => { 
+        showNotification(response.data!.notification); 
+    }); 
+}; 
+const showNotification = (notification: any) => { 
+    console.log('Showing notification'); 
+    console.log(JSON.stringify(notification)); 
+    if (notification && notification.body) {
+      console.log(notification.body);
+      // PushNotification.localNotification({
+      //   title: notification.title,
+      //   message: notification.body,
+      // });
+    }
+}; 
+// getToken(); 
+// if (Platform.OS === 'ios') { 
+//     registerForRemoteMessages(); 
+// } else { 
+//     onMessage(); 
+// } 
+
   React.useEffect(() => {
     setTimeout(function () {
       SplashScreen.hide();
@@ -118,3 +180,11 @@ export default function App() {
     </PaperProvider>
   );
 }
+function requestPermissions() {
+  throw new Error('Function not implemented.');
+}
+
+function onMessage() {
+  throw new Error('Function not implemented.');
+}
+
