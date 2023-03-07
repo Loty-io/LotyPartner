@@ -18,6 +18,13 @@ import CollectionQR from './src/screens/CollectionQR';
 import SplashScreen from 'react-native-splash-screen';
 
 import theme from './src/styles/theme';
+import { NotificationListener, requestUserPermission } from './src/helpers/pushNotificationManager';
+
+import messaging from '@react-native-firebase/messaging';
+
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+console.log('Message handled in the background!', remoteMessage);
+});
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,6 +41,8 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
+    requestUserPermission();
+    NotificationListener();
     StatusBar.setBarStyle('light-content', true);
   }, []);
 
