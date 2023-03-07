@@ -17,6 +17,7 @@ try {
 let fcmtoken = await messaging().getToken();
 if (fcmtoken) {
 await AsyncStorage.setItem('fcmtoken', fcmtoken);
+console.log(await AsyncStorage.setItem('fcmtoken', fcmtoken));
 }} 
 catch (error) {console.log(error)}}};
 export const NotificationListener = () => {
