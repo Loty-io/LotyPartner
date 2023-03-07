@@ -44,10 +44,10 @@ export const web3auth = new Web3Auth(WebBrowser, {
 export const emailWeb3auth = async (email: string) => {
   const infoEmail = await web3auth.login({
     loginProvider: LOGIN_PROVIDER.EMAIL_PASSWORDLESS,
+    redirectUrl: resolvedRedirectUrl,
     extraLoginOptions: {
       login_hint: email,
     },
-    redirectUrl: resolvedRedirectUrl,
   });
   return infoEmail;
 };
