@@ -19,6 +19,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import theme from './src/styles/theme';
 import { pushController } from './src/helpers/pushController';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,8 +35,34 @@ export default function App() {
     }, 2000);
   }, []);
 
+  const onRemoteNotification = (notification : any) => {
+    const isClicked = notification.getData().userInteraction === 1;
+
+    if (isClicked) {
+      // Navigate user to another screen
+    } else {
+      // Do something else with push notification
+    }
+    // Use the appropriate result based on what you needed to do for this notification
+    const result = PushNotificationIOS.FetchResult.NoData;
+    notification.finish(result);
+    console.log(notification);
+  };
+
   React.useEffect(() => {
+
+
+
     pushController();
+
+
+
+    const type = 'notification';
+    PushNotificationIOS.addEventListener(type, onRemoteNotification);
+    return () => {
+      PushNotificationIOS.removeEventListener(type);
+    };
+
     StatusBar.setBarStyle('light-content', true);
   }, []);
 
