@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   FlatList,
   RefreshControl,
-  Alert,
 } from 'react-native';
 
 import { truncateAddress, truncateStringIfNeeded } from '../helpers/utils';
@@ -20,35 +19,40 @@ import {
   Portal,
   useTheme,
 } from 'react-native-paper';
+import CustomAppBar from '../components/CustomAppBar';
+import CustomFAB from '../components/CustomFAB';
 
 const ScanScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const hasScannedNft = !!route?.params?.hasScannedNft;
+  const [showDialog, setshowDialog] = React.useState(false);
+  const hideDialog = () => setshowDialog(false);
+
+  const [isExtended, setIsExtended] = React.useState(true);
+  const onScroll = ({ nativeEvent }) => {
+    const currentScrollPosition =
+      Math.floor(nativeEvent?.contentOffset?.y) ?? 0;
+    setIsExtended(currentScrollPosition <= 0);
+  };
 
   const fetchData = async () => {
     try {
       const result = await getScannedNftCollections();
       setScannedNftCollections(result);
-
-      console.log(JSON.stringify(result, null, 2));
     } catch (error) {
       console.log(error);
     }
-
     setIsLoading(false);
   };
 
   React.useEffect(() => {
-    fetchData();
-
-    const interval = setInterval(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
       fetchData();
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   React.useEffect(() => {
     if (!hasScannedNft) {
@@ -60,31 +64,27 @@ const ScanScreen = ({ navigation, route }: any) => {
   const onPressScan = () => {
     navigation.navigate('Camera');
   };
-  const [showDialog, setshowDialog] = React.useState(false);
-
-  const hideDialog = () => setshowDialog(false);
 
   const dialogSignOut = (
     <Portal>
-      <Dialog
-        visible={showDialog}
+      <Dialog visible={showDialog}
         onDismiss={hideDialog}
         style={{ backgroundColor: theme.colors.background }}>
         <Dialog.Content
           style={{ alignContent: 'space-around', alignItems: 'center' }}>
-          <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
+          <Text variant="titleMedium" style={{ color: theme.colors.surface }}>
             You are leaving. . .
           </Text>
-          <Text style={{ color: theme.colors.whiteVariant }}>
+          <Text style={{ color: theme.colors.outline, marginTop:10 }}>
             Are you sure?
           </Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={() => setshowDialog(false)}>NO</Button>
-          {/* Este text debe eliminartse, por el momento me da una solución */}
-          <Text>{'                                               '}</Text>
+          <Button onPress={() => setshowDialog(false)} textColor={theme.colors.surface}>
+            NO
+          </Button>
           <Button
-            textColor={theme.colors.error}
+            textColor={theme.colors.surface}
             onPress={() => {
               clearAll();
               navigation.goBack();
@@ -127,47 +127,23 @@ const ScanScreen = ({ navigation, route }: any) => {
     },
   }) => (
     <>
-      <Card
+      <Card contentStyle={{flexDirection: 'row'}}
         style={{
           backgroundColor: theme.colors.background,
-          borderBottomColor: theme.colors.borderBottom,
+          borderBottomColor: theme.colors.background,
           borderBottomWidth: 1,
-        }}
-        onPress={() =>
-          onPressCollection(id, name, contractAddress, description)
-        }>
-        <Card.Content>
-          <Image
-            source={{ uri: `${image}` }}
-            style={{
-              width: 102,
-              height: 74,
-              borderRadius: 5,
-            }}
-          />
-          <View
-            style={{
-              justifyContent: 'space-between',
-              marginLeft: 8,
-              width: '74%',
-              paddingVertical: 2,
-            }}>
-            <Text
-              variant="titleLarge"
-              style={{
-                color: theme.colors.whiteVariant,
-              }}>
+          margin: 10}}
+        onPress={() => onPressCollection(id, name, contractAddress, description)}>
+          <Image source={{ uri: `${image}` }}
+            style={{width: 102, height: 79, borderRadius: 10}}/>
+          <View style={{ justifyContent: 'flex-start', marginLeft: 10, paddingVertical: 5,}}>
+            <Text variant="titleLarge" style={{ color: theme.colors.surface, }}>
               {name || truncateAddress(contractAddress)}
             </Text>
-            <Text
-              variant="bodyLarge"
-              style={{
-                color: theme.colors.primary,
-              }}>
+            <Text variant="bodyLarge" style={{ color: theme.colors.outline, }}>
               {truncateStringIfNeeded(description, 80)}
             </Text>
           </View>
-        </Card.Content>
       </Card>
     </>
   );
@@ -175,34 +151,21 @@ const ScanScreen = ({ navigation, route }: any) => {
   return (
     <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
       {dialogSignOut}
-      <View
-        style={{
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: 50,
-          width: '100%',
-          borderBottomColor: 'black',
-          borderBottomWidth: 1,
-          flexDirection: 'row',
-        }}>
-        <Button onPress={() => setshowDialog(true)}>Sign Out</Button>
-        <Text style={{ color: theme.colors.whiteVariant }}> QR Access</Text>
-        <Button
-          onPress={onPressSettings}
-          icon={({}) => (
-            <Image
-              source={require('../assets/settings.png')}
-              style={{ justifyContent: 'center', alignSelf: 'center' }}
-            />
-          )}>
-          {}
-        </Button>
-      </View>
+      <CustomAppBar
+        title={'My loyalty programs'}
+        isBack={false}
+        leftButtonText={'Sign Out'}
+        textButtonStyle={{ fontSize: 14 }}
+        onPressLeftButton={() => setshowDialog(true)}
+        isRightButton={true}
+        rightIcon={require('../assets/settings.png')} 
+        onPressRightButton={onPressSettings}/>
 
       {scannedNftCollections.length ? (
         <FlatList
           data={scannedNftCollections}
           renderItem={renderItem}
+          onScroll={onScroll}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           refreshControl={
@@ -210,27 +173,19 @@ const ScanScreen = ({ navigation, route }: any) => {
           }
         />
       ) : (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            flex: 1,
-          }}>
-          <Text
-            variant="titleMedium"
-            style={{ color: theme.colors.whiteVariant }}>
+        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+          <Text variant="titleLarge" style={{ color: theme.colors.outline}}>
             {isLoading ? 'Loading...' : 'Nothing scanned yet'}
           </Text>
         </View>
       )}
-
-      <Button
-        dark={false}
-        mode="contained"
-        onPress={onPressScan}
-        style={{ marginBottom: 5 }}>
-        Scan QR code
-      </Button>
+      <CustomFAB 
+      text={'Check-in'} 
+      textStyle={{color: theme.colors.surfaceVariant, fontSize: 15, }}
+      onPress = {onPressScan} 
+      isExtended={isExtended}
+      icon={require('../assets/scan.png')}
+      />
     </SafeAreaView>
   );
 };
