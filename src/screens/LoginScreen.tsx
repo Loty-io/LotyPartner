@@ -2,23 +2,23 @@ import * as React from 'react';
 import {
   ImageBackground,
   View,
-  StyleSheet,
   Image,
   ActivityIndicator,
   Platform,
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native';
-import Toast from 'react-native-toast-message';
-import { Button, Text, TextInput } from 'react-native-paper';
+
+import { DEV_MODE_PARAMS } from '../config';
 import { validateEmail, showToast } from '../helpers/utils';
 import { getStringValue, storeStringValue } from '../helpers/storage';
-import { DEV_MODE_PARAMS } from '../config';
 import { emailWeb3auth } from '../helpers/loginweb3auth';
-
+import { signChannel } from '../helpers/pushNotification';
 import RCP from '../helpers/web3auth';
 import theme from '../styles/theme';
-import { signChannel } from '../helpers/pushNotification';
+
+import { Button, Surface, Text, TextInput } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
 
 const INVALID_EMAIL = 'Invalid email';
 
@@ -46,11 +46,9 @@ const LoginScreen = ({ navigation }: any) => {
         const userInfo = await info.userInfo.idToken;
         publicAddress = '' + address;
         signChannel(info.privKey as string, publicAddress);
-        console.log(publicAddress);
         storeStringValue('publicAddress', publicAddress);
         storeStringValue('email', userEmail);
         storeStringValue('idtoken', userInfo);
-        console.log(userInfo);
         storeStringValue('typeOfLogin', 'email');
         navigation.navigate('ScanTabNavigator');
         showToast('success', 'login correcto');
@@ -74,15 +72,12 @@ const LoginScreen = ({ navigation }: any) => {
         storeStringValue('publicAddress', publicAddress);
         storeStringValue('email', emailuser);
         storeStringValue('idtoken', token);
-
         navigation.navigate('ScanTabNavigator');
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
       }
     };
-
     resolveAuth();
   }, []);
 
@@ -98,7 +93,6 @@ const LoginScreen = ({ navigation }: any) => {
       Keyboard.dismiss();
       await attemptLogin(email);
     } catch (error) {
-      console.log(error);
       if (error && error.message === INVALID_EMAIL) {
         showErrorToast(INVALID_EMAIL);
       }
@@ -106,76 +100,65 @@ const LoginScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{flex:1}}>
       <ImageBackground
         source={require('../assets/login-bg.png')}
         resizeMode="cover"
-        style={styles.image}>
+        style={{flex: 1, paddingHorizontal:14}}>
         {isLoading ? (
           <ActivityIndicator color="white" size="large" />
         ) : (
           <>
             <View style={{ flex: 1 }} />
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-              <View
+            <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+              <Surface 
                 style={{
-                  backgroundColor: '#F2F2F7',
-                  borderRadius: 24,
-                  paddingVertical: 5,
-                  paddingHorizontal: 16,
+                  borderRadius:24,
+                  backgroundColor: theme.colors.surface,
                   alignSelf: 'flex-start',
-                }}>
-                <Text
-                  variant="bodyMedium"
+                  }}> 
+                <Text variant="bodyMedium"
                   style={{
                     color: theme.colors.surfaceVariant,
-                    alignSelf: 'center',
+                    paddingVertical: 5,
+                    paddingHorizontal:16
                   }}>
                   For companies
                 </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 18,
-                  alignItems: 'center',
-                }}>
+              </Surface>
+              <View style={{flexDirection: 'row', marginTop: 18}}>
                 <Image source={require('../assets/login-logo.png')} />
                 <Text
                   variant="displayMedium"
-                  style={{ color: theme.colors.surface, alignSelf: 'center' }}>
+                  style={{ color: theme.colors.surface, marginLeft: 10}}>
                   LOTY
                 </Text>
               </View>
               <Text
-                variant="headlineLarge"
-                style={{ color: theme.colors.surface }}>
+                variant="headlineMedium"
+                style={{ color: theme.colors.surface, fontWeight: 'bold', marginTop: 20 }}>
                 The future of loyalty programs through
               </Text>
               <Text
                 variant="headlineLarge"
-                style={{ color: theme.colors.primary }}>
+                style={{ color: theme.colors.primary, fontWeight: 'bold' }}>
                 NFTs
               </Text>
             </View>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              style={styles.container}>
+              style={{marginTop:40, flex:1}}>
               <TextInput
-                style={{
-                  marginVertical: 5,
-                }}
                 textColor={theme.colors.surface}
                 outlineColor={theme.colors.outlineVariant}
                 mode="outlined"
-                label="Email"
+                label="Email@mail.com"
                 value={email}
-                placeholder="your_email@mail.com"
                 keyboardType="email-address"
                 onChangeText={onChangeEmail}
-                theme={{ roundness: 5 }}
+                theme={{ roundness: 10 }}
               />
-              <Button dark={false} mode="contained" onPress={onPressSignIn}>
+              <Button dark={false} mode="contained" onPress={onPressSignIn} style={{marginTop:15}}>
                 Sign in/ Sign up
               </Button>
             </KeyboardAvoidingView>
@@ -185,20 +168,5 @@ const LoginScreen = ({ navigation }: any) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 14,
-  },
-  input: {
-    marginTop: 40,
-    marginBottom: 20,
-  },
-});
 
 export default LoginScreen;
