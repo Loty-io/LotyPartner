@@ -19,10 +19,10 @@ import theme from '../styles/theme';
 
 import { Button, Surface, Text, TextInput } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-
-const INVALID_EMAIL = 'Invalid email';
+import { useTranslation } from 'react-i18next';
 
 const LoginScreen = ({ navigation }: any) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(true);
   const [email, onChangeEmail] = React.useState(
     false ? DEV_MODE_PARAMS.email : '',
@@ -32,7 +32,7 @@ const LoginScreen = ({ navigation }: any) => {
     setIsLoading(true);
     if (!userEmail || !validateEmail(userEmail)) {
       setIsLoading(false);
-      throw new Error(INVALID_EMAIL);
+      throw new Error(t('login.error.invalid_email'));
     }
     let publicAddress = '';
     try {
@@ -40,7 +40,7 @@ const LoginScreen = ({ navigation }: any) => {
         const info = await emailWeb3auth(userEmail);
         if (info.userInfo === '') {
           setIsLoading(false);
-          throw new Error('Something is wrong');
+          throw new Error(t('login.error.sth_wrong'));
         }
         const address = await RCP.getAccounts('0x' + info.privKey);
         const userInfo = await info.userInfo.idToken;
@@ -51,7 +51,7 @@ const LoginScreen = ({ navigation }: any) => {
         storeStringValue('idtoken', userInfo);
         storeStringValue('typeOfLogin', 'email');
         navigation.navigate('ScanTabNavigator');
-        showToast('success', 'login correcto');
+        showToast('success', t('login.success'));
         setIsLoading(false);
       }
     } catch (error) {
@@ -67,7 +67,7 @@ const LoginScreen = ({ navigation }: any) => {
         const emailuser = await getStringValue('email');
         const publicAddress = await getStringValue('publicAddress');
         if (!token || !emailuser || !publicAddress) {
-          throw new Error('Auto sing in error');
+          throw new Error(t('login.error.auto_sign'));
         }
         storeStringValue('publicAddress', publicAddress);
         storeStringValue('email', emailuser);
@@ -93,8 +93,8 @@ const LoginScreen = ({ navigation }: any) => {
       Keyboard.dismiss();
       await attemptLogin(email);
     } catch (error) {
-      if (error && error.message === INVALID_EMAIL) {
-        showErrorToast(INVALID_EMAIL);
+      if (error && error.message === t('login.error.invalid_email')) {
+        showErrorToast(t('login.error.invalid_email'));
       }
     }
   };
@@ -123,7 +123,7 @@ const LoginScreen = ({ navigation }: any) => {
                     paddingVertical: 5,
                     paddingHorizontal:16
                   }}>
-                  For companies
+                  {t('login.text.for_companies')}
                 </Text>
               </Surface>
               <View style={{flexDirection: 'row', marginTop: 18}}>
@@ -131,18 +131,18 @@ const LoginScreen = ({ navigation }: any) => {
                 <Text
                   variant="displayMedium"
                   style={{ color: theme.colors.surface, marginLeft: 10}}>
-                  LOTY
+                    {t('login.loty')}
                 </Text>
               </View>
               <Text
                 variant="headlineMedium"
                 style={{ color: theme.colors.surface, fontWeight: 'bold', marginTop: 20 }}>
-                The future of loyalty programs through
+                {t('login.text.slogan')}
               </Text>
               <Text
                 variant="headlineLarge"
                 style={{ color: theme.colors.primary, fontWeight: 'bold' }}>
-                NFTs
+                {t('login.text.nfts')}
               </Text>
             </View>
             <KeyboardAvoidingView
@@ -152,14 +152,14 @@ const LoginScreen = ({ navigation }: any) => {
                 textColor={theme.colors.surface}
                 outlineColor={theme.colors.outlineVariant}
                 mode="outlined"
-                label="Email@mail.com"
+                label={t('login.text.label')}
                 value={email}
                 keyboardType="email-address"
                 onChangeText={onChangeEmail}
                 theme={{ roundness: 10 }}
               />
               <Button dark={false} mode="contained" onPress={onPressSignIn} style={{marginTop:15}}>
-                Sign in/ Sign up
+                {t('login.signin')}
               </Button>
             </KeyboardAvoidingView>
           </>

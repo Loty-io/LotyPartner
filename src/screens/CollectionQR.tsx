@@ -11,10 +11,12 @@ import theme from '../styles/theme';
 
 import QRCode from 'react-native-qrcode-svg';
 import { Card, Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 const paddingHorizontal = 10;
 
 const CollectionQR = ({ navigation, route }: any) => {
+  const { t } = useTranslation();
   const { collectionName, id, contractAddress, description } = route.params;
 
   const onPressGoBack = () => {
@@ -26,7 +28,7 @@ const CollectionQR = ({ navigation, route }: any) => {
       <CustomAppBar
         title={''}
         isBack={true}
-        leftButtonText={'Back'}
+        leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
         onPressLeftButton={onPressGoBack}
         isRightButton={false}/>

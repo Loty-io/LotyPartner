@@ -10,8 +10,10 @@ import { callCheckInApi } from '../helpers/api';
 import { showToast } from '../helpers/utils';
 
 import { Button, Card, Text, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 const CheckInScreen = ({ navigation, route }: any) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
   const { name, description, image, qrCodeData } = route.params;
   const theme = useTheme();
@@ -24,10 +26,10 @@ const CheckInScreen = ({ navigation, route }: any) => {
         throw new Error(errorMessage);
       }
       navigation.navigate('Account', { hasScannedNft: true });
-      showToast('success', 'Scanned correctly');
+      showToast('success', t('checkinscreen.success'));
     } catch (error) {
       const errorMessage =
-        error?.response?.data?.error_message ?? 'Invalid QR Code';
+        error?.response?.data?.error_message ?? t('common.invalid_qr');
       showToast('error', errorMessage);
     } finally {
       setIsLoading(false);
@@ -42,9 +44,9 @@ const CheckInScreen = ({ navigation, route }: any) => {
     <SafeAreaView style={{flex:1, backgroundColor:theme.colors.background}}>
       <ScrollView showsVerticalScrollIndicator={false}>
       <CustomAppBar
-        title={'Loty'}
+        title={''}
         isBack={true}
-        leftButtonText={'Back'}
+        leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
         onPressLeftButton={onPressGoBack}
         isRightButton={false}/>
@@ -76,7 +78,7 @@ const CheckInScreen = ({ navigation, route }: any) => {
           right: 5,
           opacity: isLoading ? 0.5 : 1,
         }}>
-        {isLoading ? 'Loading...' : 'Check in'}
+        {isLoading ? t('common.loading') : t('common.check_in')}
       </Button>
     </SafeAreaView>
   );

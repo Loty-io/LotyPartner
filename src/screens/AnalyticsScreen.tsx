@@ -13,8 +13,10 @@ import CustomAppBar from '../components/CustomAppBar';
 import CustomFAB from '../components/CustomFAB';
 
 import { Card, Text, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 const AnalyticsScreen = ({ navigation, route }: any) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [scannedNfts, setScannedNfts] = React.useState([]);
   const [checkinData, setCheckinData] = React.useState('');
@@ -98,7 +100,7 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
       <CustomAppBar
         title={collectionName}
         isBack={true}
-        leftButtonText={'Back'}
+        leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
         onPressLeftButton={onPressGoBack}
         isRightButton={false}/>

@@ -19,9 +19,11 @@ import {
   Card,
   useTheme,
 } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 
 const ScanScreen = ({ navigation, route }: any) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -73,10 +75,10 @@ const ScanScreen = ({ navigation, route }: any) => {
         clearAll();
         navigation.goBack();
       } } 
-      title={'You are leaving. . .'} 
-      content={'Are you sure?'} 
-      textRight={'YES'} 
-      textLeft={'NO'}/>
+      title={t('scanscreen.logout.sign_out')} 
+      content={t('scanscreen.logout.dialog')} 
+      textRight={t('common.yes')} 
+      textLeft={t('common.no')}/>
   );
   
   const onPressSettings = () => {
@@ -135,9 +137,9 @@ const ScanScreen = ({ navigation, route }: any) => {
     <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
       {dialogSignOut}
       <CustomAppBar
-        title={'My loyalty programs'}
+        title={t('scanscreen.title')}
         isBack={false}
-        leftButtonText={'Sign Out'}
+        leftButtonText={t('scanscreen.logout.sign_out')}
         textButtonStyle={{ fontSize: 14 }}
         onPressLeftButton={() => setshowDialog(true)}
         isRightButton={true}
@@ -158,12 +160,12 @@ const ScanScreen = ({ navigation, route }: any) => {
       ) : (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Text variant="titleLarge" style={{ color: theme.colors.outline}}>
-            {isLoading ? 'Loading...' : 'Nothing scanned yet'}
+            {isLoading ? t('common.loading') : t('scanscreen.text.nil_scanned')}
           </Text>
         </View>
       )}
       <CustomFAB 
-      text={'Check-in'} 
+      text={t('common.check_in')} 
       textStyle={{color: theme.colors.surfaceVariant, fontSize: 15, }}
       onPress = {onPressScan} 
       isExtended={isExtended}

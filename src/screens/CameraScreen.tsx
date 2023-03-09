@@ -12,8 +12,10 @@ import theme from '../styles/theme';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {BarCodeReadEvent} from 'react-native-camera';
 import { Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 const CameraScreen = ({navigation}: any) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
 
   const onPressGoBack = () => {
@@ -31,7 +33,7 @@ const CameraScreen = ({navigation}: any) => {
       navigation.navigate('CheckIn', {...nft, qrCodeData: data});
     } catch (error) {
       const errorMessage =
-        error?.response?.data?.error_message ?? 'Invalid QR Code';
+        error?.response?.data?.error_message ?? t('common.invalid_qr');
       showToast('error', errorMessage);
     } finally {
       setIsLoading(false);
@@ -43,7 +45,7 @@ const CameraScreen = ({navigation}: any) => {
       <CustomAppBar
         title={''}
         isBack={true}
-        leftButtonText={'Back'}
+        leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
         onPressLeftButton={onPressGoBack}
         isRightButton={false}/>
@@ -56,7 +58,7 @@ const CameraScreen = ({navigation}: any) => {
             flex: 1,
           }}>
             <Text variant='titleLarge' style={{color:theme.colors.surface}}>
-            Loading...
+            {t('common.loading')}
             </Text>
         </View>
       ) : (

@@ -6,18 +6,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Toast from 'react-native-toast-message';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import theme from './src/styles/theme';
 import LoginScreen from './src/screens/LoginScreen';
 import ScanScreen from './src/screens/ScanScreen';
 import CameraScreen from './src/screens/CameraScreen';
 import CheckInScreen from './src/screens/CheckInScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import { Provider as PaperProvider } from 'react-native-paper';
-
 import CollectionQR from './src/screens/CollectionQR';
-import SplashScreen from 'react-native-splash-screen';
 
-import theme from './src/styles/theme';
+import { Provider as PaperProvider } from 'react-native-paper';
+import SplashScreen from 'react-native-splash-screen';
+import './src/i18n/i18n.config';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
