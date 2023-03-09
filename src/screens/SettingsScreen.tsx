@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   View,
-  StyleSheet,
   Image,
   SafeAreaView,
   FlatList,
@@ -10,7 +9,10 @@ import {
 } from 'react-native';
 
 import { clearAll } from '../helpers/storage';
-
+import { useTheme } from 'react-native-paper';
+import DialogButton from '../components/DialogButton';
+import CustomAppBar from '../components/CustomAppBar';
+import CustomDialog from '../components/CustomDialog';
 import {
   addContractAddressApi,
   deleteContractAddressApi,
@@ -23,15 +25,12 @@ import {
   Button,
   Text,
   Card,
-  Dialog,
-  Portal,
   TextInput,
 } from 'react-native-paper';
-import { useTheme } from 'react-native-paper';
-import DialogButton from '../components/DialogButton';
-import CustomAppBar from '../components/CustomAppBar';
+import { useTranslation } from 'react-i18next';
 
 const SettingsScreen = ({ navigation, route }: any) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [isAdding, setIsAdding] = React.useState(false);
   const [contractAddress, setContractAddress] = React.useState('');
@@ -68,17 +67,17 @@ const SettingsScreen = ({ navigation, route }: any) => {
 
   const onPressCopy = (contractAddress: string) => {
     Clipboard.setString(contractAddress);
-    showToast('success', 'Contract Address Copied!');
+    showToast('success', t('settingscreen.text.copy'));
   };
 
   const onPressDelete = async () => {
     const { hasError } = await deleteContractAddressApi(deletecontractAddress);
     if (hasError) {
-      showToast('error', 'Something is wrong');
+      showToast('error', t('common.sth_wrong'));
       return;
     }
     setDeleteContractAddress('');
-    showToast('success', 'Removed correctly');
+    showToast('success', t('settingscreen.text.removed'));
   };
 
   const isBtnDisabled = !contractAddress || isAdding;
@@ -90,7 +89,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
         ({ contractAddress }) => contractAddress,
       );
       if (contractAddress && contractAddressArray.includes(contractAddress)) {
-        showToast('error', 'Address Already Added');
+        showToast('error', t('settingscreen.text.already_added'));
         return;
       }
 
@@ -104,9 +103,9 @@ const SettingsScreen = ({ navigation, route }: any) => {
       }
 
       setContractAddress('');
-      showToast('success', 'Added correctly');
+      showToast('success', t('settingscreen.text.added'));
     } catch (error) {
-      showToast('error', 'Invalid address');
+      showToast('error', t('settingscreen.text.error'));
     } finally {
       setIsAdding(false);
     }
@@ -114,33 +113,18 @@ const SettingsScreen = ({ navigation, route }: any) => {
 
   const dialogDeleteContract = () => {
     return (
-      <Portal>
-        <Dialog
-          visible={showDialog}
-          onDismiss={hideDialog}
-          style={{ backgroundColor: theme.colors.background }}>
-          <Dialog.Content
-            style={{ alignContent: 'space-around', alignItems: 'center' }}>
-            <Text variant="titleMedium" style={{ color: theme.colors.surface }}>
-              Delete this Contract...
-            </Text>
-            <Text style={{ color: theme.colors.outline}}>
-              Are you sure?
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setshowDialog(false)}>NO</Button>
-            <Button
-              textColor={theme.colors.error}
-              onPress={() => {
-                onPressDelete();
-                setshowDialog(false);
-              }}>
-              YES
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <CustomDialog 
+      showDialog={showDialog}
+      hideDialog={hideDialog}
+      onPressLeft={() => setshowDialog(false)}
+      onPressRight={() => {
+        onPressDelete();
+        setshowDialog(false);
+      }} 
+      title={t('settingscreen.delete.title')} 
+      content={t('settingscreen.delete.dialog')} 
+      textRight={t('common.yes')} 
+      textLeft={t('common.no')}/>
     );
   };
 
@@ -188,21 +172,21 @@ const SettingsScreen = ({ navigation, route }: any) => {
       <CustomAppBar
         title={'Settings'}
         isBack={true}
-        leftButtonText={'Back'}
+        leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
         onPressLeftButton={onPressGoBack}
         isRightButton={false}/>
 
         <Text variant="titleMedium"
           style={{ color: theme.colors.surface, alignSelf: 'flex-start', margin: 15 }}>
-          Enter Smart Contract Address
+          {t('settingscreen.text.enter_add')}
         </Text>
         <TextInput
           style={{marginHorizontal: 15}}
           textColor={theme.colors.surface}
           outlineColor={theme.colors.outline}
           mode="outlined"
-          label="0x..."
+          label={t('settingscreen.text.label')}
           value={contractAddress}
           keyboardType="default"
           onChangeText={setContractAddress}
@@ -220,7 +204,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
             opacity: isBtnDisabled ? 0.7 : 1,
             alignSelf:'center',
           }}>
-          {isAdding ? 'Adding...' : 'Add'}
+          {isAdding ? t('settingscreen.text.adding') : t('settingscreen.text.add')}
         </Button>
       <Text
         variant="titleMedium"
@@ -230,7 +214,7 @@ const SettingsScreen = ({ navigation, route }: any) => {
           marginVertical: 15,
           paddingHorizontal: 16,
         }}>
-        Your Smart Contract Addresses:
+        {t('settingscreen.text.your_contract')}
       </Text>
 
       {scannedNftCollections.length ? (
@@ -247,18 +231,16 @@ const SettingsScreen = ({ navigation, route }: any) => {
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
           <Text variant="titleMedium"
             style={{ color: theme.colors.outline, fontSize: 18, textAlign: 'center', }}>
-            {isLoading ? 'Loading...' : 'Nothing added yet'}
+            {isLoading ? t('common.loading') : t('settingscreen.text.nil_added')}
           </Text>
         </View>
       )}
       <DialogButton
-        titleText="Are you sure you want to delete your user forever?"
-        bodyText="Doing so will remove all your usage data for the platform,
-              including all the customers you scanned, as well as your loyalty
-              memberships. This action is not reversible."
-        confirmBtnText="Erase Forever"
+        titleText={t('settingscreen.deleteuser.title')}
+        bodyText={t('settingscreen.deleteuser.dialog')}
+        confirmBtnText={t('settingscreen.deleteuser.confirm')}
         onConfirm={deleteUser}>
-        Delete user
+        {t('settingscreen.deleteuser.delete')}
       </DialogButton>
     </SafeAreaView>
   );

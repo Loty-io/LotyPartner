@@ -1,37 +1,35 @@
 import * as React from 'react';
 import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
   SafeAreaView,
   ScrollView,
 } from 'react-native';
 
-import CustomText from '../components/CustomText';
-import BoldCustomText from '../components/BoldCustomText';
+import CustomAppBar from '../components/CustomAppBar';
+import CustomImage from '../components/CustomImage';
 import { callCheckInApi } from '../helpers/api';
 import { showToast } from '../helpers/utils';
 
+import { Button, Card, Text, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+
 const CheckInScreen = ({ navigation, route }: any) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
   const { name, description, image, qrCodeData } = route.params;
+  const theme = useTheme();
 
   const onPressCheckIn = async () => {
     try {
       setIsLoading(true);
       const { hasError, errorMessage } = await callCheckInApi(qrCodeData);
-
       if (hasError) {
         throw new Error(errorMessage);
       }
-
-      navigation.navigate('Scan', { hasScannedNft: true });
-      showToast('success', 'Scanned correctly');
+      navigation.navigate('Account', { hasScannedNft: true });
+      showToast('success', t('checkinscreen.success'));
     } catch (error) {
       const errorMessage =
-        error?.response?.data?.error_message ?? 'Invalid QR Code';
-
+        error?.response?.data?.error_message ?? t('common.invalid_qr');
       showToast('error', errorMessage);
     } finally {
       setIsLoading(false);
@@ -43,121 +41,47 @@ const CheckInScreen = ({ navigation, route }: any) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{flex:1, backgroundColor:theme.colors.background}}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: 50,
-            width: '100%',
-            paddingHorizontal: 16,
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity onPress={onPressGoBack}>
-            <Image source={require('../assets/arrow-back.png')} />
-          </TouchableOpacity>
-          <CustomText
-            style={{
-              color: 'white',
-              fontSize: 17,
-            }}>
-            {/* {name} */}
-            loty
-          </CustomText>
-          <CustomText
-            style={{
-              color: '#1C1C1E',
-              fontSize: 17,
-            }}>
-            a.
-          </CustomText>
-        </View>
+      <CustomAppBar
+        title={''}
+        isBack={true}
+        leftButtonText={t('common.back')}
+        textButtonStyle={{ fontSize: 17 }}
+        onPressLeftButton={onPressGoBack}
+        isRightButton={false}/>
 
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingHorizontal: 18,
-            marginTop: 20,
+        <Card style={{
+          backgroundColor: theme.colors.background, 
+          padding: 18,
           }}>
-          <Image
-            source={{ uri: image }}
-            style={{
-              width: '100%',
-              aspectRatio: 1,
-              borderRadius: 8,
-            }}
-          />
-          <BoldCustomText
-            style={{
-              color: '#F2F2F7',
-              fontSize: 28,
-              marginTop: 15,
-              alignSelf: 'flex-start',
-            }}>
+          <CustomImage image={image} 
+          style={{ aspectRatio: 1, paddingHorizontal: 15, borderRadius: 10, }}/>
+          <Text variant='headlineMedium' style={{color:theme.colors.surface, marginTop:15}}>
             {name}
-          </BoldCustomText>
-          <CustomText
-            style={{
-              color: 'white',
-              fontSize: 17,
-              lineHeight: 22,
-              marginTop: 25,
-              alignSelf: 'flex-start',
-              paddingBottom: 90,
-            }}>
-            {description}
-          </CustomText>
-        </View>
+          </Text>
+          <Text variant='titleMedium' style={{color:theme.colors.surface, marginTop:25, paddingBottom: 90}}>
+          {description}
+          </Text>
+        </Card>
       </ScrollView>
-      <TouchableOpacity
-        disabled={isLoading}
+      <Button 
+        disabled={isLoading} 
         onPress={onPressCheckIn}
-        activeOpacity={0.5}
+        textColor={theme.colors.surfaceVariant}
         style={{
-          backgroundColor: '#69F6CC',
-          borderRadius: 24,
-          justifyContent: 'center',
-          alignItems: 'center',
+          backgroundColor: theme.colors.primary,
+          borderRadius:24,
           position: 'absolute',
-          paddingVertical: 13,
-          marginBottom: 5,
-          bottom: 40,
+          bottom: 45,
           left: 5,
           right: 5,
           opacity: isLoading ? 0.5 : 1,
         }}>
-        <CustomText>{isLoading ? 'Loading...' : 'Check in'}</CustomText>
-      </TouchableOpacity>
+        {isLoading ? t('common.loading') : t('common.check_in')}
+      </Button>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#1C1C1E',
-  },
-  centerText: {
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-    color: '#777',
-  },
-  textBold: {
-    fontWeight: '500',
-    color: '#000',
-  },
-  buttonText: {
-    fontSize: 21,
-    color: 'rgb(0,122,255)',
-  },
-  buttonTouchable: {
-    padding: 16,
-  },
-});
 
 export default CheckInScreen;

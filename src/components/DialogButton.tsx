@@ -43,7 +43,7 @@ const DialogButton = ({
             <Text variant="bodyMedium">{bodyText}</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button textColor={theme.colors.variantGray} onPress={hideDialog}>
+            <Button textColor={theme.colors.outlineVariant} onPress={hideDialog}>
               {cancelBtnText || 'Cancel'}
             </Button>
             <Button textColor={theme.colors.error} onPress={onConfirm}>

@@ -10,19 +10,20 @@ import {
 import { truncateAddress, truncateStringIfNeeded } from '../helpers/utils';
 import { clearAll } from '../helpers/storage';
 import { getScannedNftCollections } from '../helpers/api';
-
-import {
-  Button,
-  Text,
-  Card,
-  Dialog,
-  Portal,
-  useTheme,
-} from 'react-native-paper';
 import CustomAppBar from '../components/CustomAppBar';
 import CustomFAB from '../components/CustomFAB';
+import CustomDialog from '../components/CustomDialog';
+
+import {
+  Text,
+  Card,
+  useTheme,
+} from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+
 
 const ScanScreen = ({ navigation, route }: any) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [scannedNftCollections, setScannedNftCollections] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -66,36 +67,20 @@ const ScanScreen = ({ navigation, route }: any) => {
   };
 
   const dialogSignOut = (
-    <Portal>
-      <Dialog visible={showDialog}
-        onDismiss={hideDialog}
-        style={{ backgroundColor: theme.colors.background }}>
-        <Dialog.Content
-          style={{ alignContent: 'space-around', alignItems: 'center' }}>
-          <Text variant="titleMedium" style={{ color: theme.colors.surface }}>
-            You are leaving. . .
-          </Text>
-          <Text style={{ color: theme.colors.outline, marginTop:10 }}>
-            Are you sure?
-          </Text>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={() => setshowDialog(false)} textColor={theme.colors.surface}>
-            NO
-          </Button>
-          <Button
-            textColor={theme.colors.surface}
-            onPress={() => {
-              clearAll();
-              navigation.goBack();
-            }}>
-            YES
-          </Button>
-        </Dialog.Actions>
-      </Dialog>
-    </Portal>
+    <CustomDialog 
+      showDialog={showDialog}
+      hideDialog={hideDialog}
+      onPressLeft={() => setshowDialog(false)}
+      onPressRight={() => {
+        clearAll();
+        navigation.goBack();
+      } } 
+      title={t('scanscreen.logout.sign_out')} 
+      content={t('scanscreen.logout.dialog')} 
+      textRight={t('common.yes')} 
+      textLeft={t('common.no')}/>
   );
-
+  
   const onPressSettings = () => {
     const contractAddressArray = scannedNftCollections.map(
       ({ contractAddress }) => contractAddress,
@@ -152,9 +137,9 @@ const ScanScreen = ({ navigation, route }: any) => {
     <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
       {dialogSignOut}
       <CustomAppBar
-        title={'My loyalty programs'}
+        title={t('scanscreen.title')}
         isBack={false}
-        leftButtonText={'Sign Out'}
+        leftButtonText={t('scanscreen.logout.sign_out')}
         textButtonStyle={{ fontSize: 14 }}
         onPressLeftButton={() => setshowDialog(true)}
         isRightButton={true}
@@ -175,12 +160,12 @@ const ScanScreen = ({ navigation, route }: any) => {
       ) : (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Text variant="titleLarge" style={{ color: theme.colors.outline}}>
-            {isLoading ? 'Loading...' : 'Nothing scanned yet'}
+            {isLoading ? t('common.loading') : t('scanscreen.text.nil_scanned')}
           </Text>
         </View>
       )}
       <CustomFAB 
-      text={'Check-in'} 
+      text={t('common.check_in')} 
       textStyle={{color: theme.colors.surfaceVariant, fontSize: 15, }}
       onPress = {onPressScan} 
       isExtended={isExtended}
