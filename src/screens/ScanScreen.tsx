@@ -10,17 +10,16 @@ import {
 import { truncateAddress, truncateStringIfNeeded } from '../helpers/utils';
 import { clearAll } from '../helpers/storage';
 import { getScannedNftCollections } from '../helpers/api';
-
-import {
-  Button,
-  Text,
-  Card,
-  Dialog,
-  Portal,
-  useTheme,
-} from 'react-native-paper';
 import CustomAppBar from '../components/CustomAppBar';
 import CustomFAB from '../components/CustomFAB';
+import CustomDialog from '../components/CustomDialog';
+
+import {
+  Text,
+  Card,
+  useTheme,
+} from 'react-native-paper';
+
 
 const ScanScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
@@ -66,36 +65,20 @@ const ScanScreen = ({ navigation, route }: any) => {
   };
 
   const dialogSignOut = (
-    <Portal>
-      <Dialog visible={showDialog}
-        onDismiss={hideDialog}
-        style={{ backgroundColor: theme.colors.background }}>
-        <Dialog.Content
-          style={{ alignContent: 'space-around', alignItems: 'center' }}>
-          <Text variant="titleMedium" style={{ color: theme.colors.surface }}>
-            You are leaving. . .
-          </Text>
-          <Text style={{ color: theme.colors.outline, marginTop:10 }}>
-            Are you sure?
-          </Text>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={() => setshowDialog(false)} textColor={theme.colors.surface}>
-            NO
-          </Button>
-          <Button
-            textColor={theme.colors.surface}
-            onPress={() => {
-              clearAll();
-              navigation.goBack();
-            }}>
-            YES
-          </Button>
-        </Dialog.Actions>
-      </Dialog>
-    </Portal>
+    <CustomDialog 
+      showDialog={showDialog}
+      hideDialog={hideDialog}
+      onPressLeft={() => setshowDialog(false)}
+      onPressRight={() => {
+        clearAll();
+        navigation.goBack();
+      } } 
+      title={'You are leaving. . .'} 
+      content={'Are you sure?'} 
+      textRight={'YES'} 
+      textLeft={'NO'}/>
   );
-
+  
   const onPressSettings = () => {
     const contractAddressArray = scannedNftCollections.map(
       ({ contractAddress }) => contractAddress,

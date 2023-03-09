@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   View,
-  StyleSheet,
   Image,
   SafeAreaView,
   FlatList,
@@ -10,7 +9,10 @@ import {
 } from 'react-native';
 
 import { clearAll } from '../helpers/storage';
-
+import { useTheme } from 'react-native-paper';
+import DialogButton from '../components/DialogButton';
+import CustomAppBar from '../components/CustomAppBar';
+import CustomDialog from '../components/CustomDialog';
 import {
   addContractAddressApi,
   deleteContractAddressApi,
@@ -23,13 +25,8 @@ import {
   Button,
   Text,
   Card,
-  Dialog,
-  Portal,
   TextInput,
 } from 'react-native-paper';
-import { useTheme } from 'react-native-paper';
-import DialogButton from '../components/DialogButton';
-import CustomAppBar from '../components/CustomAppBar';
 
 const SettingsScreen = ({ navigation, route }: any) => {
   const theme = useTheme();
@@ -114,33 +111,18 @@ const SettingsScreen = ({ navigation, route }: any) => {
 
   const dialogDeleteContract = () => {
     return (
-      <Portal>
-        <Dialog
-          visible={showDialog}
-          onDismiss={hideDialog}
-          style={{ backgroundColor: theme.colors.background }}>
-          <Dialog.Content
-            style={{ alignContent: 'space-around', alignItems: 'center' }}>
-            <Text variant="titleMedium" style={{ color: theme.colors.surface }}>
-              Delete this Contract...
-            </Text>
-            <Text style={{ color: theme.colors.outline}}>
-              Are you sure?
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setshowDialog(false)}>NO</Button>
-            <Button
-              textColor={theme.colors.error}
-              onPress={() => {
-                onPressDelete();
-                setshowDialog(false);
-              }}>
-              YES
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <CustomDialog 
+      showDialog={showDialog}
+      hideDialog={hideDialog}
+      onPressLeft={() => setshowDialog(false)}
+      onPressRight={() => {
+        onPressDelete();
+        setshowDialog(false);
+      }} 
+      title={'Delete this Contract...'} 
+      content={'Are you sure?'} 
+      textRight={'YES'} 
+      textLeft={'NO'}/>
     );
   };
 
