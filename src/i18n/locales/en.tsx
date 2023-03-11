@@ -1,42 +1,45 @@
 export default {
-  common:{
+  common: {
     loading: 'Loading...',
     yes: 'YES',
     no: 'NO',
     back: 'Back',
     check_in: 'Check In',
-    sth_wrong: 'Something is wrong',
-    invalid_qr: 'Invalid QR Code'
+    generic_error: 'Something is wrong',
+    invalid_qr: 'Invalid QR Code',
   },
-  login:{
-    signin:'Sign in/ Sign up',
+  login: {
+    signin: 'Sign in/ Sign up',
     success: 'login correcto',
     loty: 'LOTY',
-    error:{
+    error: {
       invalid_email: 'Invalid Email',
-      sth_wrong: 'Something is wrong',
-      auto_sign: 'Auto sing in error'
+      generic_error: 'Something is wrong',
+      auto_sign: 'Auto sing in error',
     },
-    text:{
-      for_companies:' For Companies',
+    text: {
+      for_companies: ' For Companies',
       slogan: 'The future of loyalty programs through',
       nfts: 'NFTs',
       label: 'Email@mail.com',
-    }
+    },
   },
-  scanscreen:{
-    title: 'My Loyalty Programs',
+  navbar: {
     logout: {
       sign_out: 'Sign Out',
       dialog: 'Are you sure you want to sign out?',
     },
-    text:{
-      nil_scanned: 'Nothing scanned yet',
-    }
   },
-  settingscreen:{
-    title: 'Setting',
-    text:{
+  scan: {
+    title: 'My Loyalty Programs',
+
+    text: {
+      nil_scanned: 'Nothing scanned yet',
+    },
+  },
+  settings: {
+    title: 'Settings',
+    text: {
       copy: 'Contract Address Copied!',
       removed: 'Removed correctly',
       added: 'Added correctly',
@@ -47,20 +50,21 @@ export default {
       adding: 'Adding...',
       add: 'Add',
       your_contract: 'Your Smart Contract Addresses:',
-      nil_added: 'Nothing added yet'
+      nil_added: 'Nothing added yet',
     },
-    delete:{
+    delete: {
       title: 'Delete this Contract...',
-      dialog: 'Are you sure?'
+      dialog: 'Are you sure?',
     },
-    deleteuser:{
+    deleteuser: {
       title: 'Are you sure you want to delete your user forever?',
-      dialog: "Doing so will remove all your usage data for the platform, including all the customers you scanned, as well as your loyalty memberships. This action is not reversible.",
+      dialog:
+        'Doing so will remove all your usage data for the platform, including all the customers you scanned, as well as your loyalty memberships. This action is not reversible.',
       confirm: 'Erase Forever',
-      delete: 'Delete user'
-    }
+      delete: 'Delete user',
+    },
   },
-  checkinscreen:{
+  checkin: {
     success: 'Scanned correctly',
-  }
+  },
 };

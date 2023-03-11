@@ -66,3 +66,8 @@ buck-out/
 ios/Empresa.xcworkspace/xcshareddata/
 
 ios/Loty Partner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+
+# env vars
+.env
+.env*.local

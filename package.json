@@ -30,6 +30,7 @@
     "ethers": "^5.7.2",
     "events": "^3.3.0",
     "graphql": "^16.6.0",
+    "i18next": "^22.4.11",
     "patch-package": "^6.5.0",
     "react": "18.2.0",
     "react-i18next": "^12.2.0",

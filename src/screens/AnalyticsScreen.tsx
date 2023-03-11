@@ -1,16 +1,13 @@
 import * as React from 'react';
-import {
-  View,
-  SafeAreaView,
-  FlatList,
-  RefreshControl,
-} from 'react-native';
+import { View, SafeAreaView, FlatList, RefreshControl } from 'react-native';
 
 import { countCheckIn, truncateAddress } from '../helpers/utils';
 import { getScannedNfts } from '../helpers/api';
 
-import CustomAppBar from '../components/CustomAppBar';
-import CustomFAB from '../components/CustomFAB';
+import CustomAppBar, {
+  AppBarAction,
+} from '../components/navigation/CustomAppBar';
+import CustomFAB from '../components/custom/CustomFAB';
 
 import { Card, Text, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
@@ -56,7 +53,7 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
   React.useEffect(() => {
     fetchData();
   }, []);
-  
+
   const qrCollection = () => {
     navigation.navigate('QR', {
       id,
@@ -70,41 +67,46 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
   };
 
   const renderItem = ({ item: { name = '', owner = '', checink = '' } }) => (
-    <Card contentStyle={{flexDirection:'row'}} 
-      style={{backgroundColor: theme.colors.backdrop, borderWidth: 1, margin: 2}}>
-      <View style={{margin: 10}}>
+    <Card
+      contentStyle={{ flexDirection: 'row' }}
+      style={{
+        backgroundColor: theme.colors.backdrop,
+        borderWidth: 1,
+        margin: 2,
+      }}>
+      <View style={{ margin: 10 }}>
         <Text variant="titleLarge" style={{ color: theme.colors.surface }}>
           {name}
         </Text>
-        <Text
-          variant="bodyLarge"
-          style={{ color: theme.colors.outline }}>
+        <Text variant="bodyLarge" style={{ color: theme.colors.outline }}>
           {truncateAddress(owner)}
         </Text>
       </View>
-      <Card.Content style={{
-        position: 'absolute', 
-        right: 10, 
-        alignSelf:'center', 
-        borderBottomColor: theme.colors.primary, 
-        borderBottomWidth:1}}>
-      <Text variant="bodyLarge" style={{ color: theme.colors.primary,}}>
-        {checink}
-      </Text>
+      <Card.Content
+        style={{
+          position: 'absolute',
+          right: 10,
+          alignSelf: 'center',
+          borderBottomColor: theme.colors.primary,
+          borderBottomWidth: 1,
+        }}>
+        <Text variant="bodyLarge" style={{ color: theme.colors.primary }}>
+          {checink}
+        </Text>
       </Card.Content>
     </Card>
   );
 
   return (
-    <SafeAreaView style={{flex:1, backgroundColor:theme.colors.background}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <CustomAppBar
         title={collectionName}
-        isBack={true}
+        action={AppBarAction.BACK}
         leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
-        onPressLeftButton={onPressGoBack}
-        isRightButton={false}/>
-      
+        navigation={navigation}
+      />
+
       {checkinData.length ? (
         <FlatList
           data={checkinData}
@@ -119,15 +121,15 @@ const AnalyticsScreen = ({ navigation, route }: any) => {
       ) : (
         <View
           style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-          <Text variant='titleLarge' style={{color:theme.colors.surface}}>
+          <Text variant="titleLarge" style={{ color: theme.colors.surface }}>
             {isLoading ? 'Loading...' : 'Nothing scanned yet'}
           </Text>
         </View>
       )}
-      <CustomFAB 
-        text={'Invite new customer'} 
-        textStyle={{color: theme.colors.surfaceVariant, fontSize: 17, }}
-        onPress = {()=>qrCollection()} 
+      <CustomFAB
+        text={'Invite new customer'}
+        textStyle={{ color: theme.colors.surfaceVariant, fontSize: 17 }}
+        onPress={() => qrCollection()}
         isExtended={isExtended}
         icon={require('../assets/qr_code_scanner.png')}
       />

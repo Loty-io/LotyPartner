@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  View,
-  SafeAreaView,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import { View, SafeAreaView, Dimensions, ScrollView } from 'react-native';
 
-import CustomAppBar from '../components/CustomAppBar';
+import CustomAppBar, {
+  AppBarAction,
+} from '../components/navigation/CustomAppBar';
 import theme from '../styles/theme';
 
 import QRCode from 'react-native-qrcode-svg';
@@ -24,19 +21,24 @@ const CollectionQR = ({ navigation, route }: any) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <CustomAppBar
-        title={''}
-        isBack={true}
+        action={AppBarAction.BACK}
         leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
-        onPressLeftButton={onPressGoBack}
-        isRightButton={false}/>
+        navigation={navigation}
+      />
       <ScrollView>
-        <Card contentStyle={{alignItems: 'center', paddingHorizontal: paddingHorizontal, paddingVertical: 15}} 
-          style={{backgroundColor: theme.colors.background}}>
-          <Text variant='headlineMedium'
-            style={{color: theme.colors.surface, marginVertical: 25}}>
+        <Card
+          contentStyle={{
+            alignItems: 'center',
+            paddingHorizontal: paddingHorizontal,
+            paddingVertical: 15,
+          }}
+          style={{ backgroundColor: theme.colors.background }}>
+          <Text
+            variant="headlineMedium"
+            style={{ color: theme.colors.surface, marginVertical: 25 }}>
             {collectionName}
           </Text>
           <View
@@ -56,8 +58,9 @@ const CollectionQR = ({ navigation, route }: any) => {
               backgroundColor="white"
             />
           </View>
-          <Text variant='titleMedium'
-            style={{color: theme.colors.surface, marginVertical: 25}}>
+          <Text
+            variant="titleMedium"
+            style={{ color: theme.colors.surface, marginVertical: 25 }}>
             {description}
           </Text>
         </Card>

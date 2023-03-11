@@ -8,7 +8,7 @@ export const storeStringValue = async (key: string, value: string) => {
   }
 };
 
-export const storeObjectValue = async (key: string, value: string) => {
+export const storeObjectValue = async (key: string, value: Object) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
@@ -29,7 +29,6 @@ export const getStringValue = async (key: string) => {
 export const getObjectValue = async (key: string) => {
   try {
     const jsonValue = await AsyncStorage.getItem(key);
-    console.log({jsonValue});
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // error reading value

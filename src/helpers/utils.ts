@@ -1,6 +1,6 @@
-import {Contract} from 'ethers';
+import { Contract } from 'ethers';
 import Toast from 'react-native-toast-message';
-import {getStringValue} from './storage';
+import { getStringValue } from './storage';
 
 export const validateEmail = (email: string) => {
   var re = /\S+@\S+\.\S+/;
@@ -12,7 +12,7 @@ const truncateString = (str: string, len: number) => str.slice?.(0, len);
 export const infobyLogin = async () => {
   const publicAddress = (await getStringValue('publicAddress')) as string;
   const idToken = (await getStringValue('idtoken')) as string;
-  return {idToken, publicAddress};
+  return { idToken, publicAddress };
 };
 
 export const truncateStringIfNeeded = (text: string, limit: number) => {
@@ -40,6 +40,13 @@ export const truncateAddress = (address: string) => {
 export const showToast = (type: string, errorMessage: string) => {
   Toast.show({
     type,
+    text1: errorMessage,
+  });
+};
+
+export const showErrorToast = (errorMessage: string) => {
+  Toast.show({
+    type: 'error',
     text1: errorMessage,
   });
 };

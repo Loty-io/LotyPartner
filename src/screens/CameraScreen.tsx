@@ -1,36 +1,30 @@
 import * as React from 'react';
-import {
-  View,
-  SafeAreaView,
-} from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 
-import {getNftGromQrCode} from '../helpers/api';
-import {showToast} from '../helpers/utils';
-import CustomAppBar from '../components/CustomAppBar';
+import { getNftGromQrCode } from '../helpers/api';
+import { showToast } from '../helpers/utils';
+import CustomAppBar from '../components/navigation/CustomAppBar';
 import theme from '../styles/theme';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {BarCodeReadEvent} from 'react-native-camera';
+import { BarCodeReadEvent } from 'react-native-camera';
 import { Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import { AppBarAction } from '../components/navigation/CustomAppBar';
 
-const CameraScreen = ({navigation}: any) => {
+const CameraScreen = ({ navigation }: any) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
-
-  const onPressGoBack = () => {
-    navigation.goBack();
-  };
 
   const onRead = async (e: BarCodeReadEvent) => {
     try {
       setIsLoading(true);
       const data = e.data;
-      const {nft, hasError, errorMessage} = await getNftGromQrCode(data);
+      const { nft, hasError, errorMessage } = await getNftGromQrCode(data);
       if (hasError) {
         throw new Error(errorMessage);
       }
-      navigation.navigate('CheckIn', {...nft, qrCodeData: data});
+      navigation.navigate('CheckIn', { ...nft, qrCodeData: data });
     } catch (error) {
       const errorMessage =
         error?.response?.data?.error_message ?? t('common.invalid_qr');
@@ -41,14 +35,13 @@ const CameraScreen = ({navigation}: any) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <CustomAppBar
-        title={''}
-        isBack={true}
+        action={AppBarAction.BACK}
         leftButtonText={t('common.back')}
         textButtonStyle={{ fontSize: 17 }}
-        onPressLeftButton={onPressGoBack}
-        isRightButton={false}/>
+        navigation={navigation}
+      />
 
       {isLoading ? (
         <View
@@ -57,9 +50,9 @@ const CameraScreen = ({navigation}: any) => {
             alignItems: 'center',
             flex: 1,
           }}>
-            <Text variant='titleLarge' style={{color:theme.colors.surface}}>
+          <Text variant="titleLarge" style={{ color: theme.colors.surface }}>
             {t('common.loading')}
-            </Text>
+          </Text>
         </View>
       ) : (
         <QRCodeScanner onRead={onRead} />
