@@ -4,9 +4,11 @@ import { infobyLogin } from './utils';
 
 const SUCCESS = 'success';
 
-export const getScannedNftCollections = async () => {
-  const { idToken, publicAddress } = await infobyLogin();
-  const url = `${baseUrl}/scanned-nft-collections?idToken=${idToken}&publicAddress=${publicAddress}`;
+export const getScannedNftCollections = async (
+  publicAddress: string,
+  jwt: string,
+) => {
+  const url = `${baseUrl}/scanned-nft-collections?idToken=${jwt}&publicAddress=${publicAddress}`;
   // console.log(url);
   const response = await axios.get(url);
 

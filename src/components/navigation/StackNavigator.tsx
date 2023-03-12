@@ -1,12 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import AnalyticsScreen from '../../screens/AnalyticsScreen';
 import CameraScreen from '../../screens/CameraScreen';
 import CheckInScreen from '../../screens/CheckInScreen';
-import CollectionQR from '../../screens/CollectionQR';
 import LoginScreen from '../../screens/LoginScreen';
 import SettingsScreen from '../../screens/SettingsScreen';
+import CheckInDetail from '../collections/CheckInDetail';
+import { CollectionDetail } from '../collections/CollectionDetail';
 import TabNavigator from './TabNavigator';
 
 export default function StackNavigator() {
@@ -28,20 +27,24 @@ export default function StackNavigator() {
         }}
       />
       <Stack.Screen name="Camera" component={CameraScreen} options={options} />
-      <Stack.Screen name="QR" component={CollectionQR} options={options} />
       <Stack.Screen
         name="CheckIn"
         component={CheckInScreen}
         options={options}
       />
       <Stack.Screen
-        name="Analytics"
-        component={AnalyticsScreen}
+        name="Settings"
+        component={SettingsScreen}
         options={options}
       />
       <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="CollectionDetail"
+        component={CollectionDetail}
+        options={options}
+      />
+      <Stack.Screen
+        name="CheckInDetail"
+        component={CheckInDetail}
         options={options}
       />
     </Stack.Navigator>
