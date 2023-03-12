@@ -1,34 +1,51 @@
 import * as React from 'react';
 import { View, SafeAreaView } from 'react-native';
 
-import { getNftGromQrCode } from '../helpers/api';
-import { showToast } from '../helpers/utils';
-import CustomAppBar from '../components/navigation/CustomAppBar';
-import theme from '../styles/theme';
+import { showToast } from '../../helpers/utils';
+import CustomAppBar from '../navigation/CustomAppBar';
+import theme from '../../styles/theme';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent } from 'react-native-camera';
 import { Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import { AppBarAction } from '../components/navigation/CustomAppBar';
+import { AppBarAction } from '../navigation/CustomAppBar';
+import speakeasy from 'speakeasy';
+import { OTP_SECRET, OTP_STEP } from '../../config';
 
-const CameraScreen = ({ navigation }: any) => {
+export const CameraOTPValidator = ({ navigation, route }: any) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
+
+  function validateOTP(clientOTP: string): boolean {
+    const expectedOTP = speakeasy.totp({
+      secret: OTP_SECRET,
+      encoding: 'ascii',
+      time: (Date.now() / 1000) | 0,
+      step: OTP_STEP,
+    });
+    return clientOTP === expectedOTP;
+  }
 
   const onRead = async (e: BarCodeReadEvent) => {
     try {
       setIsLoading(true);
-      const data = e.data;
-      const { nft, hasError, errorMessage } = await getNftGromQrCode(data);
-      if (hasError) {
-        throw new Error(errorMessage);
+      const data = JSON.parse(e.data);
+      const isValid = validateOTP(data.token);
+
+      if (isValid) {
+        navigation.navigate('CheckIn', {
+          userPublicAddress: data.embeddedInfo.publicAddress,
+        });
+      } else {
+        showToast('error', t('common.invalid_qr'));
+        navigation.navigate('TabNavigator', {
+          screen: t('common.account'),
+        });
       }
-      navigation.navigate('CheckIn', { ...nft, qrCodeData: data });
     } catch (error) {
-      const errorMessage =
-        error?.response?.data?.error_message ?? t('common.invalid_qr');
-      showToast('error', errorMessage);
+      console.error('error validating qr code', error);
+      showToast('error', t('common.invalid_qr'));
     } finally {
       setIsLoading(false);
     }
@@ -55,10 +72,8 @@ const CameraScreen = ({ navigation }: any) => {
           </Text>
         </View>
       ) : (
-        <QRCodeScanner onRead={onRead} />
+        <QRCodeScanner onRead={onRead} reactivateTimeout={5000} />
       )}
     </SafeAreaView>
   );
 };
-
-export default CameraScreen;

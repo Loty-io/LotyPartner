@@ -17,13 +17,7 @@ const MainScreen = ({ navigation, route }: any) => {
   const [isExtended, setIsExtended] = React.useState(true);
 
   const onPressScan = () => {
-    navigation.navigate('CheckIn', {
-      name: '38',
-      description: 'LotySpaHouse',
-      image:
-        'https://nft-cdn.alchemy.com/matic-mainnet/adc8ad7051817481ea3192408c43f8cc',
-      qrCodeData: '173226',
-    });
+    navigation.navigate('CameraOTPValidator');
   };
 
   return (

@@ -8,7 +8,7 @@ import {
 import { getObjectValue, storeObjectValue } from '../helpers/storage';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import { LOTY_BACKEND_URL } from '@env';
+import { LOTY_BACKEND_URL } from '../config';
 
 const httpLink = new HttpLink({ uri: LOTY_BACKEND_URL });
 
