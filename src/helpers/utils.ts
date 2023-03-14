@@ -49,16 +49,16 @@ export const showErrorToast = (errorMessage: string) => {
   });
 };
 
-interface CheckInData {
-  name: string;
-  contractAddress: string;
-  owner: string;
-}
-
-export const countCheckInsByOwner = async (data: CheckInData[]) => {
+export const countCheckInsByOwner = async (
+  data: {
+    name: string;
+    contractAddress: string;
+    owner: string;
+  }[],
+) => {
   let checkIns: { [id: string]: number } = {};
   data.forEach(info => {
-    checkIns[info.owner] = checkIns[info.owner] ? checkIns[info.owner] + 1 : 1;
+    checkIns[info.owner] = checkIns[info.owner] + 1 || 1;
   });
   return checkIns;
 };

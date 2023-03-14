@@ -30,7 +30,7 @@ export default {
       dialog: 'Are you sure you want to sign out?',
     },
   },
-  scan: {
+  account: {
     title: 'My Loyalty Programs',
 
     text: {
